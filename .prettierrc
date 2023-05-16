@@ -1,0 +1,15 @@
+{
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "php",
+                "printWidth": 120,
+                "tabWidth": 4,
+                "singleQuote": true,
+                "trailingComma": "all"
+            }
+        }
+    ]
+}
+  
