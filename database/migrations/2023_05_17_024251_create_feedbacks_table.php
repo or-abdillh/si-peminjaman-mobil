@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('letter_id');
             $table->text('body');
-            
+            $table->timestamps();
+
             $table->foreign('letter_id')->references('id')->on('letters');
         });
 

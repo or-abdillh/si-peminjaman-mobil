@@ -24,6 +24,7 @@ return new class extends Migration
             $table->dateTime('estimation_time');
             $table->dateTime('estimation_activity');
             $table->boolean('status')->default(false);
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('car_id')->references('id')->on('cars');
