@@ -11,8 +11,8 @@
 <link href="{{ asset('soft-ui/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
 <!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-<link href="{{ asset('soft-ui../assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/b026c11a83.js" crossorigin="anonymous"></script>
+<link href="{{ asset('soft-ui/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
 <!-- CSS Files -->
 <link id="pagestyle" href="{{ asset('soft-ui/assets/css/soft-ui-dashboard.css?v=1.0.7') }}" rel="stylesheet" />
