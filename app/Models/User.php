@@ -41,4 +41,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function letters()
+    {
+        return $this->hasMany(Letter::class);
+    }
+
+    public function signature()
+    {
+        return $this->hasOne(Signature::class);
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(UserManager::class, 'user_id');
+    }
+
+    public function managedBy()
+    {
+        return $this->hasMany(UserManager::class, 'manager_id');
+    }
 }
