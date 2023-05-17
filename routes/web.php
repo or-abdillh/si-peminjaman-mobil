@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
     // Dashboard 
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+
+    // Car
+    Route::resource('/admin/car', AdminCarController::class)->names('admin.car');
 });
 
 // User Routes

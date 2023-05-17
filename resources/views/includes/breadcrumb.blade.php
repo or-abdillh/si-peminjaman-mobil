@@ -3,5 +3,5 @@
     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
     </ol>
-    <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+    <h6 class="font-weight-bolder mb-0">{{ @$page }}</h6>
 </nav>

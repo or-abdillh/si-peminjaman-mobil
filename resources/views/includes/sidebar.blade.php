@@ -14,10 +14,10 @@
         <ul class="navbar-nav">
             {{-- dashboard     --}}
             <li class="nav-item">
-                <a class="nav-link active" href="">
+                <a class="nav-link {{ request()->routeIs('admin.dashboard.index') ? 'active' : '' }}" href="/admin">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-house"></i>
+                        <i class="fa-solid fa-house {{ request()->routeIs('admin.dashboard.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Dashboard</span>
@@ -30,10 +30,10 @@
 
             {{-- Unit Mobil --}}
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link {{ request()->routeIs('admin.car.index') ? 'active' : '' }}" href="{{ route('admin.car.index') }}">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-car text-dark"></i>
+                        <i class="fa-solid fa-car {{ request()->routeIs('admin.car.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Unit Mobil</span>
