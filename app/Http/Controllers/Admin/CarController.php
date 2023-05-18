@@ -55,7 +55,7 @@ class CarController extends Controller
         ]);
 
         $car = Car::create($validate);
-        flash()->addSuccess("Berhasil menambahkan $car->name ke dalam database");
+        notyf()->addSuccess("Berhasil menambahkan $car->name ke dalam database");
 
         return redirect()->back();
 
@@ -92,7 +92,7 @@ class CarController extends Controller
 
         $car->update($validate);
 
-        flash()->addSuccess("Berhasil melakukan perubahan data unit $car->name");
+        notyf()->addSuccess("Berhasil melakukan perubahan data unit $car->name");
         return redirect()->back();
     }
 
@@ -105,7 +105,7 @@ class CarController extends Controller
         $car = Car::findOrFail($id);
 
         $car->delete();
-        flash()->addSuccess('Berhasil menghapus unit dari database');
+        notyf()->addSuccess('Berhasil menghapus unit dari database');
         return redirect()->back();
     }
 }

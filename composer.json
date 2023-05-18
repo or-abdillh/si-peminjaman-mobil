@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
         "php-flasher/flasher-laravel": "^1.13",
+        "php-flasher/flasher-notyf-laravel": "^1.13",
         "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {
