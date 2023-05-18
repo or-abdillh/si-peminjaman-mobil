@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\SignatureController as UserSignatureController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,7 @@ Route::group(['middleware' => ['auth', 'role:user']], function() {
 
     // Dashboard
     Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
+
+    // Route resource
+    Route::resource('/signature', UserSignatureController::class)->names('user.signature');
 });

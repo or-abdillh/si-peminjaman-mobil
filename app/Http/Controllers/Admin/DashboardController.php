@@ -10,7 +10,14 @@ class DashboardController extends Controller
     //
     public function index()
     {
+        // Kirim data ke view
+        $data = [
+            'page' => 'Dashboard Administrator',
+        ];
+
+        // Notif selamat datang
         notyf()->addInfo('Halo, ' . auth()->user()->name);
-        return view('dashboard');
+
+        return view('dashboard', $data);
     }
 }

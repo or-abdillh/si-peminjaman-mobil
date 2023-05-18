@@ -14,10 +14,15 @@
         <ul class="navbar-nav">
             {{-- dashboard     --}}
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.dashboard.index') ? 'active' : '' }}" href="/admin">
+                <a class="nav-link {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('user.dashboard.index') ? 'active' : '' }}" 
+                    @if (auth()->user()->hasRole('admin'))
+                        href="/admin"
+                    @else
+                        href="/"
+                    @endif>
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-house {{ request()->routeIs('admin.dashboard.index') ? '' : 'text-dark' }}"></i>
+                        <i class="fa-solid fa-house {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('user.dashboard.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Dashboard</span>
@@ -28,6 +33,8 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data Master</h6>
             </li>
 
+            {{-- Hanya untuk role admin  --}}
+            @if ( auth()->user()->hasRole('admin') )
             {{-- Unit Mobil --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.car.index') ? 'active' : '' }}" href="{{ route('admin.car.index') }}">
@@ -51,18 +58,21 @@
                     <span class="nav-link-text ms-1">Pengguna</span>
                 </a>
             </li>
+            @endif
 
+            @if ( auth()->user()->hasRole('user') )
             {{-- Signature --}}
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link {{ request()->routeIs('user.signature.index') ? 'active' : '' }}" href="{{ route('user.signature.index') }}">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-file-signature text-dark"></i>
+                        <i class="fa-solid fa-file-signature {{ request()->routeIs('user.signature.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Tanda Tangan</span>
                 </a>
             </li>
+            @endif
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data Transaksi</h6>
