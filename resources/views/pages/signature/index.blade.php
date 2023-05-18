@@ -184,7 +184,7 @@
 {{-- modal untuk menghapus tanda tangan --}}
 <div class="modal fade" id="deleteSignatureModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('user.signature.destroy', $signature->id) }}" class="modal-content">
+        <form method="POST" action="{{ route('signature.destroy', $signature->id) }}" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Hapus Tanda Tangan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

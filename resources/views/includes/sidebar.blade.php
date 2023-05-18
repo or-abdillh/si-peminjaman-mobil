@@ -62,13 +62,13 @@
             </li>
             @endif
 
-            @if ( auth()->user()->hasRole('user') )
+            @if ( !auth()->user()->hasRole('admin') )
             {{-- Signature --}}
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('user.signature.index') ? 'active' : '' }}" href="{{ route('user.signature.index') }}">
+                <a class="nav-link {{ request()->routeIs('signature.index') ? 'active' : '' }}" href="{{ route('signature.index') }}">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-file-signature {{ request()->routeIs('user.signature.index') ? '' : 'text-dark' }}"></i>
+                        <i class="fa-solid fa-signature {{ request()->routeIs('signature.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Tanda Tangan</span>
@@ -94,6 +94,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data Transaksi</h6>
             </li>
 
+            @if ( auth()->user()->hasRole('user') )
             {{-- Pengajuan --}}
             <li class="nav-item">
                 <a class="nav-link" href="">
@@ -105,7 +106,23 @@
                     <span class="nav-link-text ms-1">Pengajuan</span>
                 </a>
             </li>
+            @endif
 
+            @if ( auth()->user()->hasRole('deputy') || auth()->user()->hasRole('manager') )
+            {{-- Pengesahan --}}
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    {{-- icon --}}
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-file-signature text-dark"></i>
+                    </div>
+                    {{-- link title --}}
+                    <span class="nav-link-text ms-1">Pengesahan</span>
+                </a>
+            </li>
+            @endif
+
+            @if ( auth()->user()->hasRole('admin') )
             {{-- Arsip --}}
             <li class="nav-item">
                 <a class="nav-link" href="">
@@ -117,6 +134,7 @@
                     <span class="nav-link-text ms-1">Arsip</span>
                 </a>
             </li>
+            @endif
 
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Area Pengguna</h6>

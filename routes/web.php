@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
-use App\Http\Controllers\User\SignatureController as UserSignatureController;
+use App\Http\Controllers\SignatureController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +22,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+// Global routes
+Route::group(['middleware' => ['auth', 'role:manager|user|deputy']], function() {
+
+    // Route resource
+    Route::resource('/signature', SignatureController::class)->names('signature');
+});
 
 // Admin Routes
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
@@ -39,9 +46,6 @@ Route::group(['middleware' => ['auth', 'role:user']], function() {
 
     // Dashboard
     Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
-
-    // Route resource
-    Route::resource('/signature', UserSignatureController::class)->names('user.signature');
 });
 
 // Manager Routes

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Signature;
@@ -23,9 +23,9 @@ class SignatureController extends Controller
             $usedByLetter = $signature->validationsAsApplicant->count();
 
             // membuat route untuk form signature edit atau create
-            $route = route('user.signature.update', $signature->id);
+            $route = route('signature.update', $signature->id);
         } else {
-            $route = route('user.signature.store');
+            $route = route('signature.store');
             $usedByLetter = 0;
         } 
 
@@ -37,7 +37,7 @@ class SignatureController extends Controller
             'usedByLetter' => $usedByLetter
         ];
 
-        return view('pages.user.signature.index', $data);
+        return view('pages.signature.index', $data);
     }
 
     /**
