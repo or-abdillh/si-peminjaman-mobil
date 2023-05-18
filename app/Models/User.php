@@ -54,11 +54,11 @@ class User extends Authenticatable
 
     public function employees()
     {
-        return $this->hasMany(UserManager::class, 'user_id');
+        return $this->hasMany(UserManager::class, 'manager_id');
     }
 
     public function managedBy()
     {
-        return $this->hasMany(UserManager::class, 'manager_id');
+        return $this->hasMany(UserManager::class, 'user_id');
     }
 }

@@ -14,15 +14,17 @@
         <ul class="navbar-nav">
             {{-- dashboard     --}}
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('user.dashboard.index') ? 'active' : '' }}" 
+                <a class="nav-link {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('manager.dashboard.index') || request()->routeIs('user.dashboard.index') ? 'active' : '' }}" 
                     @if (auth()->user()->hasRole('admin'))
                         href="/admin"
+                    @elseif(auth()->user()->hasRole('manager'))
+                        href="/manager"
                     @else
                         href="/"
                     @endif>
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-house {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('user.dashboard.index') ? '' : 'text-dark' }}"></i>
+                        <i class="fa-solid fa-house {{ request()->routeIs('admin.dashboard.index') || request()->routeIs('manager.dashboard.index') || request()->routeIs('user.dashboard.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Dashboard</span>
@@ -70,6 +72,20 @@
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Tanda Tangan</span>
+                </a>
+            </li>
+            @endif
+            
+            @if ( auth()->user()->hasRole('manager') )
+            {{-- Employe --}}
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('manager.employee.index') ? 'active' : '' }}" href="{{ route('manager.employee.index') }}">
+                    {{-- icon --}}
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-user-group {{ request()->routeIs('manager.employee.index') ? '' : 'text-dark' }}"></i>
+                    </div>
+                    {{-- link title --}}
+                    <span class="nav-link-text ms-1">Karyawan</span>
                 </a>
             </li>
             @endif

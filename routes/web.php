@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\SignatureController as UserSignatureController;
 use Illuminate\Support\Facades\Auth;
@@ -40,4 +42,14 @@ Route::group(['middleware' => ['auth', 'role:user']], function() {
 
     // Route resource
     Route::resource('/signature', UserSignatureController::class)->names('user.signature');
+});
+
+// Manager Routes
+Route::group(['middleware' => ['auth', 'role:manager']], function() {
+
+    // Dashboard
+    Route::get('/manager', [ManagerDashboardController::class, 'index'])->name('manager.dashboard.index');
+
+    // Route resource
+    Route::resource('/manager/employee', ManagerEmployeeController::class)->names('manager.employee');
 });

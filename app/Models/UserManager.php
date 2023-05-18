@@ -11,12 +11,12 @@ class UserManager extends Model
 
     protected $guarded = ['id'];
 
-    public function employe()
+    public function employeeDetail()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function manager()
+    public function managerDetail()
     {
         return $this->belongsTo(User::class, 'manager_id');
     }
