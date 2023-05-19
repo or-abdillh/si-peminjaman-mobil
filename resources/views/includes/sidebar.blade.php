@@ -97,10 +97,10 @@
             @if ( auth()->user()->hasRole('user') )
             {{-- Pengajuan --}}
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link {{ request()->routeIs('user.letter.index') ? 'active' : '' }}" href="{{ route('user.letter.index') }}">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-envelope-open-text text-dark"></i>
+                        <i class="fa-solid fa-envelope-open-text {{ request()->routeIs('user.letter.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Pengajuan</span>

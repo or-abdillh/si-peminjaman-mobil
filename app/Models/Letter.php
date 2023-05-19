@@ -35,4 +35,9 @@ class Letter extends Model
     {
         return $this->hasOne(Validation::class);
     }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }

@@ -136,7 +136,7 @@
 
                         <label>Password Default</label>
                         <div class="mb-3">
-                            <input name="password" type="text" value="12345678" readonly disabled class="form-control @error('password') is-invalid @enderror" required placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                            <input name="password" type="text" value="12345678" readonly class="form-control @error('password') is-invalid @enderror" required placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\LetterController as UserLetterController;
 use App\Http\Controllers\SignatureController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,9 @@ Route::group(['middleware' => ['auth', 'role:user']], function() {
 
     // Dashboard
     Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
+
+    // Route resource
+    Route::resource('/letter', UserLetterController::class)->names('user.letter');
 });
 
 // Manager Routes

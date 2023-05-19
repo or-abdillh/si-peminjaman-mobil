@@ -61,11 +61,11 @@ class UserController extends Controller
         $user = User::create([
             'name' => $validate['name'],
             'email' => $validate['email'],
-            'password' => bcrypt( $validate['password'] )
+            'password' => bcrypt($validate['password'])
         ]);
 
         // Menetapkan tipe akun berdasarkan role yang dipilih
-        $user->assignRole( $validate['role'] );
+        $user->assignRole($validate['role']);
 
         // Menampilkan notif
         notyf()->addSuccess('Berhasil menambahkan ' . $user->name . ' sebagai ' . $validate['role'] . ' baru');
@@ -100,7 +100,7 @@ class UserController extends Controller
             $user = User::findOrfail($id);
 
             // Jika melakukan perubahan data email pengguna
-            if ( $user->email == $request->all()['email'] ) {
+            if ($user->email == $request->all()['email']) {
 
                 // Melakukan validasi request tanpa perubahan email
                 $validate = $request->validate([
@@ -124,13 +124,12 @@ class UserController extends Controller
             ]);
 
             // Melakukan perubahan tipe akun
-            $user->syncRoles([ $validate['role'] ]);
+            $user->syncRoles([$validate['role']]);
             $user->save();
 
             // Mengirimkan notif berhasil 
             notyf()->addSuccess('Berhasil melaukan perubahan data pengguna');
-
-        } catch( ValidationException $err ) {
+        } catch (ValidationException $err) {
             // Kirim notif gagal melakukan pembaruan data pengguna
             notyf()->addError($err->getMessage());
             notyf()->addInfo('Gagal memperbarui data pengguna dari ' . $user->name);
@@ -150,7 +149,7 @@ class UserController extends Controller
 
         // Mengahapus data pengguna
         $user->delete();
-        
+
         // Kirim kan notifikasi berhasil
         notyf()->addSuccess('Berhasil menghapus data pengguna');
 
