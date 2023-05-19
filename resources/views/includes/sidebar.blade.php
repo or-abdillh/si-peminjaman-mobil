@@ -117,10 +117,16 @@
             @if ( auth()->user()->hasRole('deputy') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('admin') )
             {{-- Pengesahan --}}
             <li class="nav-item">
-                <a class="nav-link">
+                <a class="nav-link {{ request()->routeIs('manager.validation.index') ? 'active' : '' }}"
+                @if (auth()->user()->hasRole('manager'))
+                    href="{{ route('manager.validation.index') }}"
+                @else
+                    href="/"
+                @endif
+                >
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-file-signature text-dark"></i>
+                        <i class="fa-solid fa-file-signature {{ request()->routeIs('manager.validation.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Legalisir</span>

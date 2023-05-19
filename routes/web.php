@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LetterController as AdminLetterController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
+use App\Http\Controllers\Manager\ValidationController as ManagerValidationController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\LetterController as UserLetterController;
 use App\Http\Controllers\SignatureController;
@@ -62,4 +63,5 @@ Route::group(['middleware' => ['auth', 'role:manager']], function () {
 
     // Route resource
     Route::resource('/manager/employee', ManagerEmployeeController::class)->names('manager.employee');
+    Route::resource('/manager/validation', ManagerValidationController::class)->names('manager.validation');
 });
