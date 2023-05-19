@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\LetterController as AdminLetterController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Global routes
-Route::group(['middleware' => ['auth', 'role:manager|user|deputy']], function() {
+Route::group(['middleware' => ['auth', 'role:manager|user|deputy']], function () {
 
     // Route resource
     Route::resource('/signature', SignatureController::class)->names('signature');
@@ -40,10 +41,11 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     // Route resource
     Route::resource('/admin/car', AdminCarController::class)->names('admin.car');
     Route::resource('/admin/user', AdminUserController::class)->names('admin.user');
+    Route::resource('/admin/letter', AdminLetterController::class)->names('admin.letter');
 });
 
 // User Routes
-Route::group(['middleware' => ['auth', 'role:user']], function() {
+Route::group(['middleware' => ['auth', 'role:user']], function () {
 
     // Dashboard
     Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard.index');
@@ -53,7 +55,7 @@ Route::group(['middleware' => ['auth', 'role:user']], function() {
 });
 
 // Manager Routes
-Route::group(['middleware' => ['auth', 'role:manager']], function() {
+Route::group(['middleware' => ['auth', 'role:manager']], function () {
 
     // Dashboard
     Route::get('/manager', [ManagerDashboardController::class, 'index'])->name('manager.dashboard.index');

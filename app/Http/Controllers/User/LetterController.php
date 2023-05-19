@@ -49,7 +49,7 @@ class LetterController extends Controller
         if ($letterProcess) notyf()->addInfo('Pengajuan terakhir anda masih sedang di proses');
 
         // Ambil mobil yang status nya tersedia
-        $availableCars = Car::where('status', true)->get();
+        $availableCars = Car::where('status', false)->get();
 
         // beri notifikasi jumlah mobil yang tersedia
         if (count($availableCars) == 0) notyf()->addError('Tidak ada mobil yang tersedia untuk saat ini');

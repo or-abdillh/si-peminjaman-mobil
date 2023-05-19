@@ -94,13 +94,19 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Data Transaksi</h6>
             </li>
 
-            @if ( auth()->user()->hasRole('user') )
+            @if ( auth()->user()->hasRole('user') || auth()->user()->hasRole('admin') )
             {{-- Pengajuan --}}
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('user.letter.index') ? 'active' : '' }}" href="{{ route('user.letter.index') }}">
+                <a class="nav-link {{ request()->routeIs('user.letter.index') || request()->routeIs('admin.letter.index') ? 'active' : '' }}" 
+                    @if (auth()->user()->hasRole('user'))
+                    href="{{ route('user.letter.index') }}"
+                    @else
+                    href="{{ route('admin.letter.index') }}"
+                    @endif
+                    >
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-envelope-open-text {{ request()->routeIs('user.letter.index') ? '' : 'text-dark' }}"></i>
+                        <i class="fa-solid fa-envelope-open-text {{ request()->routeIs('user.letter.index') || request()->routeIs('admin.letter.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Pengajuan</span>
@@ -108,16 +114,16 @@
             </li>
             @endif
 
-            @if ( auth()->user()->hasRole('deputy') || auth()->user()->hasRole('manager') )
+            @if ( auth()->user()->hasRole('deputy') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('admin') )
             {{-- Pengesahan --}}
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-file-signature text-dark"></i>
                     </div>
                     {{-- link title --}}
-                    <span class="nav-link-text ms-1">Pengesahan</span>
+                    <span class="nav-link-text ms-1">Legalisir</span>
                 </a>
             </li>
             @endif
