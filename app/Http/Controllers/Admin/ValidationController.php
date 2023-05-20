@@ -94,7 +94,7 @@ class ValidationController extends Controller
             || is_null($validation->deputy_signature)
         ) {
             // beri notifikasi
-            notyf()->iaddInfo('Kolom legalisir masih ada yang kosong');
+            notyf()->addInfo('Kolom legalisir masih ada yang kosong');
             notyf()->addError('Proses diabatalkan');
 
             // kembali ke halaman sebelumnya
