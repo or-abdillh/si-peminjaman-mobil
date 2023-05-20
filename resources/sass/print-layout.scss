@@ -189,7 +189,7 @@ $width: 780px;
             }
 
             .applicant--content {
-                width: ($width / 2) - 150px;
+                width: calc($width / 2) - 150px;
             }
 
             &:first-child {
