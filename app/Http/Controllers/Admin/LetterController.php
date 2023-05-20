@@ -38,14 +38,14 @@ class LetterController extends Controller
         if (count($letterNotConfirmeds) > 0) {
             // beri notifikasi
             notyf()->addInfo('Ada ' . count($letterNotConfirmeds) . ' pengajuan yang harus dikonfirmasi');
-        }
+        } else notyf()->addSuccess('Tidak ada pengajuan yang perlu dikonfirmasi');
 
         // ambil unit mobil yang bisa digunakan
         $cars = Car::where('status', false)->get();
 
         // kirim data ke view
         $data = [
-            'page' => 'Pengesahan Pengajuan Masuk',
+            'page' => 'Pengajuan Masuk',
             'letters' => $letters,
             'letterTodays' => $letterTodays,
             'letterAccepteds' => $letterAccepteds,
