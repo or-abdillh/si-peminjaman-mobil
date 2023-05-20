@@ -1,0 +1,257 @@
+// default jenis font
+* {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+// warna
+$tinta: #737373;
+
+// default lebar surat
+$width: 780px;
+
+// mixins
+@mixin flex-between-center() {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin cell-border() {
+    border: 1.5px solid $tinta;
+    border-top: 0;
+    border-left: 0;
+    
+    &:last-child {
+        border-right: 0;
+    }
+}
+
+// pembungkus surat
+#letter {
+    width: $width;
+    min-height: 200px;
+    margin: 0 auto;
+    // border: 1.5px solid $tinta;
+    
+    // header surat
+    header {
+        @include flex-between-center();
+        padding: 0 1rem;
+        border: 1.5px solid $tinta;
+        border-bottom: 0;
+        
+        // logo
+        .header--logo {
+            width: 10%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        // title
+        .header--title {
+            text-align: right;
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    // detail surat
+    .detail {
+        // pembungkus detail per baris
+        .detail--wrapper {
+            @include flex-between-center();
+            gap: 1rem;
+            border: 1.5px solid $tinta;
+            border-bottom: 0;
+            padding: 0 1rem .25rem;
+
+            // pembungkus judul baris
+            .detail--title {
+                @include flex-between-center();
+                width: 150px;
+
+                p {
+                    text-decoration: underline;
+                    margin-bottom: 0;
+                }
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                gap: .25rem;
+                width: $width - 140px;
+
+                small {
+                    &:first-child {
+                        font-weight: 500;
+                        font-size: .85rem;
+                    }
+                }
+            }
+
+            // pembungkus isi detail per baris
+            .detail--content {
+                display: flex;
+                gap: 1rem;
+                width: $width - 140px;
+            }
+        }
+    }
+
+    // estimasi kegiatan
+    .estimation {
+        border: 1.5px solid $tinta;
+        border-bottom: 0;
+
+        .table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+
+            thead {
+                th {
+                    @include cell-border();
+                    font-weight: 500;
+                }
+            }
+
+            th, td {
+                &:first-child {
+                    width: 40%;
+                }
+
+                &:last-child {
+                    width: 60%;
+                }
+            }
+
+            tbody {
+                td {
+                    @include cell-border();
+                    border: 1.5px solid $tinta;
+                    border-bottom: 0;
+                    border-left: 0;
+                    &:first-child {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    // peserta
+    .participant {
+        border: 1.5px solid $tinta;
+        border-left: 0;
+
+        .participant--title {
+            padding: 1rem 0 1rem 1rem;
+            font-weight: 500;
+            border-left: 1.5px solid $tinta;
+        }
+
+        .participant--list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            .participant--list--column {
+                @include flex-between-center();
+                border: 1.5px solid $tinta;
+                border-bottom: 0;
+                border-right: 0;
+                padding: .45rem;
+            }
+        }
+    }
+
+    // informasi pendamping atau pemohon
+    .applicant {
+        display: flex;
+        gap: 1rem;
+        border: 1.5px solid $tinta;
+        border-top: 0;
+        
+        .applicant--wrapper {
+            @include flex-between-center();
+            width: 50%;
+            padding: .45rem;
+
+            .applicant--title {
+                width: 120px;
+                font-weight: 500;
+                text-decoration: underline;
+            }
+
+            .applicant--content {
+                width: ($width / 2) - 150px;
+            }
+
+            &:first-child {
+                border-right: 1.5px solid $tinta;
+            }
+        }
+    }
+
+    // catatan dan hari ditetapkan
+    .information {
+        @include flex-between-center();
+        border: 1.5px solid $tinta;
+        border-top: 0;
+        font-weight: 500;
+
+        .information--note, .information--date {
+            padding: .45rem;
+        }
+
+        .information--note {
+            border-right: 1.5px solid $tinta;
+        }
+    }
+
+    // tanda tangan
+    .signature {
+        @include flex-between-center();
+        text-align: center;
+        margin-top: .15rem;
+        border: 1.5px solid $tinta;
+        border-left: 0;
+        border-top: 0;
+        border-bottom: 0;
+
+        .signature--wrapper {
+            width: 100%;
+
+            .header, footer {
+                border: 1.5px solid $tinta;
+                padding: .25rem;
+            }
+
+            .header {
+                border-right: 0;
+            }
+
+            footer {
+                border-top: 0;
+                border-right: 0;
+            }
+
+            main {
+                border: 1.5px solid $tinta;
+                border-top: 0;
+                border-right: 0;
+                padding: .25rem;
+
+                img {
+                    width: 50%;
+                    margin: auto;
+                }
+            }
+        }
+    }
+}

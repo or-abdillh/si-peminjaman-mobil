@@ -39,6 +39,14 @@ class LetterController extends Controller
         // Ambil semua surat yang pernah dibuat dan di telah disetujui
         $letterAccepteds = Letter::where('user_id', $user->id)->where('status', true)->get();
 
+        // ambil surat yang baru saja di setujui
+        $letterLastAccepted = Letter::where('user_id', $user->id)->latest()->first();
+
+        if ($letterLastAccepted->status) {
+            // beri notifikasi
+            notyf()->addSuccess('Pengajuan pada kegiatan ' . $letterLastAccepted->name . ' telah disetujui');
+        }
+
         // Ambil semua surat yang pernah dibuat tapi ditolak
         $letterRejecteds = Letter::where('user_id', $user->id)->where('status', false)->get();
 
@@ -51,9 +59,11 @@ class LetterController extends Controller
         // Ambil mobil yang status nya tersedia
         $availableCars = Car::where('status', false)->get();
 
-        // beri notifikasi jumlah mobil yang tersedia
-        if (count($availableCars) == 0) notyf()->addError('Tidak ada mobil yang tersedia untuk saat ini');
-        else notyf()->addInfo('Saat ini hanya tersedia ' . count($availableCars) . ' mobil yang bisa digunakan');
+        // beri notifikasi jumlah mobil yang tersedia hanya jika tidak ada pengajuan yang belum disetujui
+        if (!$letterLastAccepted->status) {
+            if (count($availableCars) == 0) notyf()->addError('Tidak ada mobil yang tersedia untuk saat ini');
+            else notyf()->addInfo('Saat ini hanya tersedia ' . count($availableCars) . ' mobil yang bisa digunakan');
+        }
 
         // Kirim data ke view
         $data = [
@@ -62,6 +72,7 @@ class LetterController extends Controller
             'letters' => $letters,
             'lastLetter' => $lastletter,
             'letterAccepteds' => $letterAccepteds,
+            'letterLastAccepted' => $letterLastAccepted,
             'letterRejecteds' => $letterRejecteds,
             'letterProcess' => $letterProcess,
             'availableCars' => $availableCars
@@ -196,5 +207,40 @@ class LetterController extends Controller
 
         // kembali ke halaman sebelumnya
         return redirect()->back();
+    }
+
+    // cetak surat pengajuan
+    public function print($id)
+    {
+        // ambil data pengajuan
+        $letter = Letter::findOrFail($id);
+
+        // hitung jumlah peserta berdasarkan gender
+        $participants = $letter->participants;
+
+        // pria
+        $participantMales = $participants->filter(function ($participant) {
+            return $participant->gender === 'Pria';
+        })->count();
+
+        // wanita
+        $participantFemales = $participants->filter(function ($participant) {
+            return $participant->gender === 'Wanita';
+        })->count();
+
+        // kirim data ke view
+        $data = [
+            'name' => $letter->name,
+            'letter' => $letter,
+            'participants' => $participants,
+            'participantMales' => $participantMales,
+            'participantFemales' => $participantFemales,
+        ];
+
+        // beri notifikasi cara print berkas
+        notyf()->addInfo('Surat anda siap untuk dicetak, gunakan CTRL + P untuk print surat');
+
+        // render view
+        return view('pages.user.letter.print', $data);
     }
 }

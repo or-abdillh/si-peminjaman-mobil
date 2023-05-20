@@ -2,7 +2,7 @@
 <link rel="icon" type="image/png" href="../assets/img/favicon.png">
 
 <!-- main title -->
-<title>SI Peminjaman Mobil -- Tata Usaha SMP/SMA GIBS</title>
+<title>SI Peminjaman Mobil — Tata Usaha SMP/SMA GIBS</title>
 <!--     Fonts and icons     -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 

@@ -17,7 +17,7 @@
                 <div class="row">
                   <div class="col-8">
                     <div class="numbers">
-                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pengajuan</p>
+                      <p class="text-sm mb-0 text-capitalize font-weight-bold">Total</p>
                       <h5 class="font-weight-bolder mb-0">
                         {{-- menampilkan hasil query --}}
                         <h6>{{ @$letters }} Surat</h6>
@@ -126,6 +126,33 @@
                     <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#showLetterModal">Lihat</button>
                     {{-- hapus pengajuan --}}
                     <button type="button" class="col btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteLetterModal">Batalkan</button>
+                </section>
+            </section>
+        </section>
+    </section>
+    @elseif ($letterLastAccepted)
+    {{-- munculkan alert  --}}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Silahkan melakukan konfirmasi dengan menekan tombol <strong>Selesai</strong>, jika anda telah selesai menggunakan unit mobil dalam kegiatan {{ $letterLastAccepted->name }} 
+    </div>
+    <section class="row">
+        <section class="col-9">
+            <section class="card mb-4">
+                <section class="card-body row">
+                    <h5>Pengajuan telah disetujui</h5>
+                    <small>Pengajuan anda pada kegiatan <strong>{{ $letterLastAccepted->name }}</strong> yang akan  dilaksanakan pada {{ date('D, j F Y', strtotime($letterLastAccepted->start_time)) }} telah <strong>Disetujui</strong></small>
+                </section>
+            </section>
+        </section>
+        <section class="col-3">
+            <section class="card">
+                <section class="card-body row">
+                    {{-- lihat pengajuan --}}
+                    <button type="button" class="col-12 btn btn-primary" data-bs-toggle="modal" data-bs-target="#showLetterModal">Lihat</button>
+                    {{-- cetak surat --}}
+                    <a href="{{ route('user.letter.print', $letterLastAccepted->id) }}" target="_blank" class="col-12 btn btn-success mb-3">Cetak</a>
+                    {{-- konfirmasi selesai --}}
+                    <button type="button" class="col-12 btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteLetterModal">Selesai</button>
                 </section>
             </section>
         </section>
@@ -355,8 +382,8 @@
     </section>
     @endif
 
-    @if (@$letterProcess)
-    {{-- modal untuk menampilkan detail pengajuan yang sedang di prosess --}}
+    @if (@$letterProcess || @$letterLastAccepted)
+    {{-- modal untuk menampilkan detail pengajuan yang sedang di prosess atau yang disetujui--}}
     <div class="modal fade" id="showLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <section class="modal-content">
@@ -367,11 +394,11 @@
                 <div class="modal-body">
                     <section>
                         <small class="text-secondary">Kegiatan</small>
-                        <h6>{{ $letterProcess->name }}</h6>
+                        <h6>{{ @$letterProcess->name ?? @$letterLastAccepted->name }}</h6>
                     </section>
                     <section>
                         <small>Waktu kegiatan</small>
-                        <h6>Dari {{ date('D, j F Y H:i', strtotime($letterProcess->start_time)) }} sampai {{ date('D, j F Y H:i', strtotime($letterProcess->finish_time)) }}</h6>
+                        <h6>Dari {{ date('D, j F Y H:i', strtotime(@$letterProcess->start_time ?? @$letterLastAccepted->start_time)) }} sampai {{ date('D, j F Y H:i', strtotime(@$letterProcess->finish_time ?? @$letterLastAccepted->finish_time)) }}</h6>
                     </section>
                     <section class="row">
                         <section class="col">
@@ -385,7 +412,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($letterProcess->participants as $participant)
+                                    @foreach (@$letterProcess->participants ?? @$letterLastAccepted->participants as $participant)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $participant->name }}</td>
@@ -406,7 +433,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($letterProcess->activities as $activity)
+                                    @foreach (@$letterProcess->activities ?? @$letterLastAccepted->activities as $activity)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $activity->estimation_time }}</td>
@@ -424,7 +451,7 @@
             </section>
         </div>
     </div>   
-
+    @if ($letterProcess)
     {{-- modal untuk menghapus detail pengajuan --}}
     <div class="modal fade" id="deleteLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -446,7 +473,8 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>   
+    @endif
     @endif
 </main>
 

@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
 
     // Route resource
     Route::resource('/letter', UserLetterController::class)->names('user.letter');
+
+    // Print
+    Route::get('/letter/print/{id}', [UserLetterController::class, 'print'])->name('user.letter.print');
 });
 
 // Manager Routes
