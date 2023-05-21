@@ -8,6 +8,7 @@ use App\Models\Car;
 use App\Models\Letter;
 use App\Models\Participant;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -212,6 +213,32 @@ class LetterController extends Controller
     // cetak surat pengajuan
     public function print($id)
     {
+        $data = $this->generateLetterData($id);
+
+        // beri notifikasi cara print berkas
+        notyf()->addInfo('Surat anda siap untuk dicetak, gunakan CTRL + P untuk print surat');
+
+        // render view
+        return view('pages.user.letter.print', $data);
+    }
+
+    // unduh surat pengajuan
+    public function download($id)
+    {
+        // ambil data yang mau di unduh
+        $data = $this->generateLetterData($id);
+
+        //  inisiasi PDF
+        $pdf = Pdf::loadView('pages.user.letter.print', $data);
+
+        return $pdf->download('Surat Pengajuan ' . $data['name'] . '.pdf');
+
+        // return $pdf->stream();
+    }
+
+    // method untuk mengolah yang akan di cetak atau di unduh
+    public function generateLetterData($id)
+    {
         // ambil data pengajuan
         $letter = Letter::findOrFail($id);
 
@@ -228,6 +255,18 @@ class LetterController extends Controller
             return $participant->gender === 'Wanita';
         })->count();
 
+        // buat variabel untuk menyimpan kolom kosong peserta
+        $emptyColumns = 0;
+        $column = 3;
+
+        if (count($participants) > $column) {
+            // ambil sisa kolom peserta dari modulues $column
+            $participantColumns = count($participants) % $column;
+            $emptyColumns = $column - $participantColumns;
+        } else {
+            $emptyColumns = $column - count($participants);
+        }
+
         // kirim data ke view
         $data = [
             'name' => $letter->name,
@@ -235,12 +274,9 @@ class LetterController extends Controller
             'participants' => $participants,
             'participantMales' => $participantMales,
             'participantFemales' => $participantFemales,
+            'emptyColumns' => $emptyColumns
         ];
 
-        // beri notifikasi cara print berkas
-        notyf()->addInfo('Surat anda siap untuk dicetak, gunakan CTRL + P untuk print surat');
-
-        // render view
-        return view('pages.user.letter.print', $data);
+        return $data;
     }
 }

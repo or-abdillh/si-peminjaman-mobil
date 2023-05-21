@@ -5,8 +5,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/sass/print-layout.scss',
             ],
             refresh: true,
         }),

@@ -106,14 +106,12 @@
         </section>
         @endforeach
         {{-- render list kosong  --}}
-        @if (count(@$participants) < 18)
-        @for ($i = count(@$participants); $i < 18; $i++)
+        @for ($i = count(@$participants); $i < @$emptyColumns + count(@$participants); $i++)
         <section class="participant--list--column">
             <small>{{ $i + 1 }}. </small>
             <small>L/P</small>
         </section>
         @endfor
-        @endif
     </section>
 </section>
 
