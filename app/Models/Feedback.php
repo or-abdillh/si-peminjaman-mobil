@@ -9,6 +9,7 @@ class Feedback extends Model
 {
     use HasFactory;
 
+    protected $table = 'feedbacks';
     protected $guarded = ['id'];
 
     public function letter()

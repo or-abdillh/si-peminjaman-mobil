@@ -145,7 +145,7 @@
                                         {{-- tombol untuk memunculkan modal menyetujui --}}
                                         <a href="javascript;;" data-letter="{{ json_encode([ 'id' => @$letter->id, 'user_id' => @$letter->user_id ]) }}" data-role="btn-confirm" data-bs-toggle="modal" data-bs-target="#formConfirmModal" class="text-success me-2 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Konfirmasi">Konfirmasi</a>
                                         {{-- tombol untuk memunculkan modal tolak pengajuan --}}
-                                        <a href="javascript;;" data-user="{{ json_encode(['id' => @$letter->id, 'name' => @$letter->name]) }}" data-role="btn-reject" data-bs-toggle="modal" data-bs-target="#formRejecteModal" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Tolak">Tolak</a>
+                                        <a href="javascript;;" data-letter="{{ json_encode(['id' => @$letter->id, 'name' => @$letter->name, 'user' => @$letter->user->name]) }}" data-role="btn-reject" data-bs-toggle="modal" data-bs-target="#formRejectModal" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Tolak">Tolak</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -214,6 +214,32 @@
   </div>
 </div>
 
+{{-- modal untuk konfirmasi menolak pengajuan --}}
+<div class="modal fade" id="formRejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <form method="POST" class="modal-content" action="{{ route('admin.letter.feedback.store') }}">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Tolak Pengajuan</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            @csrf
+            <input type="hidden" name="letter_id">
+            <p></p>
+            <div class="mb-2">
+              <label>Alasan</label>
+              <textarea name="body" cols="30" rows="5" class="form-control" required></textarea>
+            </div>
+            <small>Anda bisa menambahkan alasan penolakan pada form diatas</small>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Reject</button>
+          </div>
+      </form>
+  </div>
+</div>
+
 @endsection
 
 @push('after-scripts')
@@ -248,6 +274,36 @@ window.addEventListener('DOMContentLoaded', () => {
       // isi otomatis pada form konfirmasi
       confirmModal.form.setAttribute('action', '/admin/letter/' + id)
       confirmModal.user.value = user_id
+    })
+  })
+})
+
+</script>
+
+{{-- script js untuk konfirmasi penolakan --}}
+<script type="text/javascript">
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  // ambil semua tombol tolak pada tabel
+  const btnRejects = document.querySelectorAll('[data-role=btn-reject]')
+
+  // ambil form penolakan
+  const rejectModal = {
+    body: document.querySelector('#formRejectModal p'),
+    key: document.querySelector('#formRejectModal [name=letter_id]')
+  }
+
+  // munculkan modal saat tombol tolak di klik
+  btnRejects.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      // ambil data pengajuan yang akan di tolak
+      const { id, name, user } = JSON.parse( btn.dataset.letter )
+
+      // isi otomatis modal
+      rejectModal.key.value = id
+      rejectModal.body.innerHTML = `Yakin untuk melakukan penolakan terhadap pengajuan <strong>${ user }</strong> pada kegiatan <strong>${ name }?</strong>`
     })
   })
 })

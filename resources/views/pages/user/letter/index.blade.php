@@ -130,12 +130,12 @@
             </section>
         </section>
     </section>
-    @elseif ($letterLastAccepted)
+    @elseif (@$letterLastAccepted)
     {{-- munculkan alert  --}}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         Silahkan melakukan konfirmasi dengan menekan tombol <strong>Selesai</strong>, jika anda telah selesai menggunakan unit mobil dalam kegiatan {{ $letterLastAccepted->name }} 
     </div>
-    <section class="row">
+    <section class="row mb-4">
         <section class="col-9">
             <section class="card mb-4">
                 <section class="card-body row">
@@ -157,7 +157,24 @@
             </section>
         </section>
     </section>
-    @else
+    {{-- infokan bahwa pengajuan terakhir ditolak --}}
+    @elseif (@$letterLastRejected)
+    <section class="row">
+        <section class="col">
+            <section class="card mb-4">
+                <section class="card-body row">
+                    <h5>Pengajuan ditolak</h5>
+                    <small class="mb-3">Pengajuan anda pada kegiatan <strong>{{ $letterLastRejected->name }}</strong> yang akan  dilaksanakan pada {{ date('D, j F Y', strtotime($letterLastRejected->start_time)) }} telah <strong>Ditolak</strong></small>
+                    {{-- lihat alasan --}}
+                    <a href="javascript;;" style="text-decoration: underline" class="col-12 link-primary mb-0" data-bs-toggle="modal" data-bs-target="#feedbackRejectModal">Lihat Alasan</a>
+                </section>
+            </section>
+        </section>
+    </section>
+    @endif
+
+    {{-- munculkan form jika tidak ada pengajuan yang sedang di proses dan disetujui --}}
+    @if (!@$letterProcess)
     {{-- form pengajuan peminjaman --}}
     <section class="row mb-4">
 
@@ -475,6 +492,29 @@
         </div>
     </div>   
     @endif
+    @endif
+
+    {{-- modal untuk melihat alasan penolakan --}}
+    @if (@$letterLastRejected)
+    <div class="modal fade" id="feedbackRejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <section class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pengajuan Ditolak</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Pengajuan anda pada kegiatan <strong>{{ $letterLastRejected->name }}</strong> ditolak oleh admin, dengan alasan sebagai berikut</p>
+                  <div class="mb-2">
+                    <textarea readonly disabled cols="30" rows="5" class="form-control">{{ $letterLastRejected->feedback->body }}</textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </section>
+        </div>
+      </div>
     @endif
 </main>
 

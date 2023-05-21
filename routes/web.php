@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
 use App\Http\Controllers\Admin\LetterController as AdminLetterController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ValidationController as AdminValidationController;
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::resource('/admin/car', AdminCarController::class)->names('admin.car');
     Route::resource('/admin/user', AdminUserController::class)->names('admin.user');
     Route::resource('/admin/letter', AdminLetterController::class)->names('admin.letter');
+    Route::resource('/admin/letter/feedback', AdminFeedbackController::class)->names('admin.letter.feedback');
     Route::resource('/admin/validation', AdminValidationController::class)->names('admin.validation');
 });
 

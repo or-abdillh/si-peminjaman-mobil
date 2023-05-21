@@ -40,12 +40,21 @@ class LetterController extends Controller
         // Ambil semua surat yang pernah dibuat dan di telah disetujui
         $letterAccepteds = Letter::where('user_id', $user->id)->where('status', true)->get();
 
-        // ambil surat yang baru saja di setujui
-        $letterLastAccepted = Letter::where('user_id', $user->id)->latest()->first();
+        // ambil surat yang baru saja di kirim
+        $letterLastSubmitted = Letter::where('user_id', $user->id)->latest()->first();
 
-        if ($letterLastAccepted->status) {
+        // cek apakah itu surat yang disetujui
+        if ($letterLastSubmitted && $letterLastSubmitted->status) {
             // beri notifikasi
-            notyf()->addSuccess('Pengajuan pada kegiatan ' . $letterLastAccepted->name . ' telah disetujui');
+            notyf()->addSuccess('Pengajuan pada kegiatan ' . $letterLastSubmitted->name . ' telah disetujui');
+            $letterLastAccepted = $letterLastSubmitted;
+        }
+
+        // cek apakah itu surat yang di tolak
+        if ($letterLastSubmitted && !$letterLastSubmitted->status && !is_null($letterLastSubmitted->status)) {
+            // beri notifikasi
+            notyf()->addError('Pengajuan pada kegiatan ' . $letterLastSubmitted->name . ' ditolak oleh admin');
+            $letterLastRejected = $letterLastSubmitted;
         }
 
         // Ambil semua surat yang pernah dibuat tapi ditolak
@@ -61,10 +70,8 @@ class LetterController extends Controller
         $availableCars = Car::where('status', false)->get();
 
         // beri notifikasi jumlah mobil yang tersedia hanya jika tidak ada pengajuan yang belum disetujui
-        if (!$letterLastAccepted->status) {
-            if (count($availableCars) == 0) notyf()->addError('Tidak ada mobil yang tersedia untuk saat ini');
-            else notyf()->addInfo('Saat ini hanya tersedia ' . count($availableCars) . ' mobil yang bisa digunakan');
-        }
+        if (count($availableCars) == 0) notyf()->addError('Tidak ada mobil yang tersedia untuk saat ini');
+        else notyf()->addInfo('Saat ini hanya tersedia ' . count($availableCars) . ' mobil yang bisa digunakan');
 
         // Kirim data ke view
         $data = [
@@ -73,7 +80,8 @@ class LetterController extends Controller
             'letters' => $letters,
             'lastLetter' => $lastletter,
             'letterAccepteds' => $letterAccepteds,
-            'letterLastAccepted' => $letterLastAccepted,
+            'letterLastAccepted' => $letterLastAccepted ?? null,
+            'letterLastRejected' => $letterLastRejected ?? null,
             'letterRejecteds' => $letterRejecteds,
             'letterProcess' => $letterProcess,
             'availableCars' => $availableCars
