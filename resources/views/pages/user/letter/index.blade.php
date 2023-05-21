@@ -152,7 +152,7 @@
                     {{-- cetak surat --}}
                     <a href="{{ route('user.letter.print', $letterLastAccepted->id) }}" target="_blank" class="col-12 btn btn-success mb-3">Cetak</a>
                     {{-- konfirmasi selesai --}}
-                    <button type="button" class="col-12 btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteLetterModal">Selesai</button>
+                    <button type="button" class="col-12 btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#confirmationModal">Selesai</button>
                 </section>
             </section>
         </section>
@@ -497,7 +497,9 @@
     {{-- modal untuk melihat alasan penolakan --}}
     @if (@$letterLastRejected)
     <div class="modal fade" id="feedbackRejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <form class="modal-dialog" action="{{ route('user.letter.confirmation', $letterLastRejected->id) }}" method="POST">
+            @csrf
+            @method('PUT')
             <section class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Pengajuan Ditolak</h5>
@@ -511,10 +513,34 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Confirmation</button>
                 </div>
             </section>
-        </div>
-      </div>
+        </form>
+    </div>
+    @endif
+
+    {{-- modal untuk menyatakan selesai menggunakan unit --}}
+    @if (@$letterLastAccepted)
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form class="modal-dialog" action="{{ route('user.letter.confirmation', $letterLastAccepted->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <section class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Selesai</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Apakah anda ingin melakukan konfirmasi bahwa pengajuan peminjaman unit mobil <strong>{{ $letterLastAccepted->car->name }}</strong> pada kegiatan <strong>{{ $letterLastAccepted->name }}</strong> yang dilaksanakan pada {{ date('j F Y', strtotime($letterLastAccepted->start_time)) }} telah selesai?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Confirmation</button>
+                </div>
+            </section>
+        </form>
+    </div>
     @endif
 </main>
 

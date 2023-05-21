@@ -32,13 +32,13 @@ class LetterController extends Controller
         }
 
         // hitung semua surat yang pernah diajukan
-        $letters = $user->letters->count();
+        $letters = Letter::withTrashed()->where('user_id', $user->id)->count();
 
         // Ambil data pengajuan terakhir
         $lastletter = $user->letters->last();
 
         // Ambil semua surat yang pernah dibuat dan di telah disetujui
-        $letterAccepteds = Letter::where('user_id', $user->id)->where('status', true)->get();
+        $letterAccepteds = Letter::withTrashed()->where('user_id', $user->id)->where('status', true)->get();
 
         // ambil surat yang baru saja di kirim
         $letterLastSubmitted = Letter::where('user_id', $user->id)->latest()->first();
@@ -58,7 +58,7 @@ class LetterController extends Controller
         }
 
         // Ambil semua surat yang pernah dibuat tapi ditolak
-        $letterRejecteds = Letter::where('user_id', $user->id)->where('status', false)->get();
+        $letterRejecteds = Letter::withTrashed()->where('user_id', $user->id)->where('status', false)->get();
 
         // Ambil apakah ada pengajuan yang masih di proses
         $letterProcess = Letter::where('user_id', $user->id)->whereNull('status')->first();
@@ -286,5 +286,28 @@ class LetterController extends Controller
         ];
 
         return $data;
+    }
+
+    // method untuk konfirmasi selesai menggunakan unit mobil berdasarkan pengajuan
+    public function confirmation($id)
+    {
+        // ambil data surat pengajuan
+        $letter = Letter::findOrFail($id);
+
+        // ambil data unit mobil yang digunakan
+        $car = $letter->car;
+
+        // ubah status unit mobil dari true ke false atau tersedia
+        if ($car) $car->update(['status' => false]);
+
+        // hapus data pengajuan
+        $letter->delete();
+
+        // beri notifikasi
+        notyf()->addSuccess('Konfirmasi dari anda berhasil diterima');
+        notyf()->addInfo('Silahkan mengisi form pengajuan lagi jika diperlukan');
+
+        // kembali ke halaman sebelumnya
+        return redirect()->back();
     }
 }
