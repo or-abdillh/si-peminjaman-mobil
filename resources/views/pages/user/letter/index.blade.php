@@ -174,7 +174,7 @@
     @endif
 
     {{-- munculkan form jika tidak ada pengajuan yang sedang di proses dan disetujui --}}
-    @if (!@$letterProcess)
+    @if (!@$letterProcess && !@$letterLastAccepted)
     {{-- form pengajuan peminjaman --}}
     <section class="row mb-4">
 
@@ -467,7 +467,7 @@
                 </div>
             </section>
         </div>
-    </div>   
+    </div>
     @if ($letterProcess)
     {{-- modal untuk menghapus detail pengajuan --}}
     <div class="modal fade" id="deleteLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
