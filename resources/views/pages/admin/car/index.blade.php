@@ -127,6 +127,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nama Unit</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terkahir Diperbarui</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                                 </tr>
                               </thead>
@@ -139,6 +140,9 @@
                                         <div class="badge badge-sm {{ $car->status ? 'bg-gradient-danger' : 'bg-gradient-success' }}">{{ $car->status ? 'Digunakan' : 'Tersedia' }}</div>
                                     </td>
                                     <td class="text-center">{{ $car->updated_at->diffForHumans() }}</td>
+                                    <td class="">{{ 
+                                        $car?->letter?->name ? 'Digunakan oleh ' . $car?->letter?->user?->name . ' pada kegiatan ' . $car?->letter?->name : "Tidak ada data"
+                                     }}</td>
                                     <td class="text-center">
                                         {{-- edit --}}
                                         <a href="javascript;;" data-car="{{ json_encode($car) }}" data-role="btn-edit" data-bs-toggle="modal" data-bs-target="#formEditModal" class="text-success me-2 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Ubah unit">
