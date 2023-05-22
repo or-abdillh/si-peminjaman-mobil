@@ -1,1 +1,199 @@
-*{font-family:Roboto,sans-serif;font-size:16px}#letter{width:780px;min-height:200px;margin:0 auto}#letter header{display:flex;justify-content:space-between;align-items:center;padding:0 1rem;border:1.5px solid #737373;border-bottom:0}#letter header .header--logo{width:10%}#letter header .header--logo img{width:100%}#letter header .header--title{text-align:right}#letter header .header--title h1{font-size:1.5rem}#letter .detail .detail--wrapper{display:flex;justify-content:space-between;align-items:center;gap:1rem;border:1.5px solid #737373;border-bottom:0;padding:0 1rem .25rem}#letter .detail .detail--wrapper .detail--title{display:flex;justify-content:space-between;align-items:center;width:150px}#letter .detail .detail--wrapper .detail--title p{text-decoration:underline;margin-bottom:0}#letter .detail .detail--wrapper .column{display:flex;flex-direction:column;gap:.25rem;width:640px}#letter .detail .detail--wrapper .column small:first-child{font-weight:500;font-size:.85rem}#letter .detail .detail--wrapper .detail--content{display:flex;gap:1rem;width:640px}#letter .estimation{border:1.5px solid #737373;border-bottom:0}#letter .estimation .table{width:100%;table-layout:fixed;border-collapse:collapse}#letter .estimation .table thead th{border:1.5px solid #737373;border-top:0;border-left:0;font-weight:500}#letter .estimation .table thead th:last-child{border-right:0}#letter .estimation .table th:first-child,#letter .estimation .table td:first-child{width:40%}#letter .estimation .table th:last-child,#letter .estimation .table td:last-child{width:60%}#letter .estimation .table tbody td{border-top:0;border:1.5px solid #737373;border-bottom:0;border-left:0}#letter .estimation .table tbody td:last-child{border-right:0}#letter .estimation .table tbody td:first-child{text-align:center}#letter .participant{border:1.5px solid #737373;border-left:0}#letter .participant .participant--title{padding:1rem 0 1rem 1rem;font-weight:500;border-left:1.5px solid #737373}#letter .participant .participant--list{display:grid;grid-template-columns:repeat(3,1fr)}#letter .participant .participant--list .participant--list--column{display:flex;justify-content:space-between;align-items:center;border:1.5px solid #737373;border-bottom:0;border-right:0;padding:.45rem}#letter .applicant{display:flex;gap:1rem;border:1.5px solid #737373;border-top:0}#letter .applicant .applicant--wrapper{display:flex;justify-content:space-between;align-items:center;width:50%;padding:.45rem}#letter .applicant .applicant--wrapper .applicant--title{width:120px;font-weight:500;text-decoration:underline}#letter .applicant .applicant--wrapper .applicant--content{width:240px}#letter .applicant .applicant--wrapper:first-child{border-right:1.5px solid #737373}#letter .information{display:flex;justify-content:space-between;align-items:center;border:1.5px solid #737373;border-top:0;font-weight:500}#letter .information .information--note,#letter .information .information--date{padding:.45rem}#letter .information .information--note{border-right:1.5px solid #737373}#letter .signature{display:flex;justify-content:space-between;align-items:center;text-align:center;margin-top:.15rem;border:1.5px solid #737373;border-left:0;border-top:0;border-bottom:0}#letter .signature .signature--wrapper{width:100%}#letter .signature .signature--wrapper .header,#letter .signature .signature--wrapper footer{border:1.5px solid #737373;padding:.25rem}#letter .signature .signature--wrapper .header{border-right:0}#letter .signature .signature--wrapper footer{border-top:0;border-right:0}#letter .signature .signature--wrapper main{border:1.5px solid #737373;border-top:0;border-right:0;padding:.25rem}#letter .signature .signature--wrapper main img{width:50%;margin:auto}
+* {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+  }
+  #letter {
+    width: 780px;
+    min-height: 200px;
+    margin: 0 auto;
+  }
+  #letter header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    border: 1.5px solid #737373;
+    border-bottom: 0;
+  }
+  #letter header .header--logo {
+    width: 10%;
+  }
+  #letter header .header--logo img {
+    width: 100%;
+  }
+  #letter header .header--title {
+    text-align: right;
+  }
+  #letter header .header--title h1 {
+    font-size: 1.5rem;
+  }
+  #letter .detail .detail--wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border: 1.5px solid #737373;
+    border-bottom: 0;
+    padding: 0 1rem 0.25rem;
+  }
+  #letter .detail .detail--wrapper .detail--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 150px;
+  }
+  #letter .detail .detail--wrapper .detail--title p {
+    text-decoration: underline;
+    margin-bottom: 0;
+  }
+  #letter .detail .detail--wrapper .column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 640px;
+  }
+  #letter .detail .detail--wrapper .column small:first-child {
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+  #letter .detail .detail--wrapper .detail--content {
+    display: flex;
+    gap: 1rem;
+    width: 640px;
+  }
+  #letter .estimation {
+    border: 1.5px solid #737373;
+    border-bottom: 0;
+  }
+  #letter .estimation .table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+  #letter .estimation .table thead th {
+    border: 1.5px solid #737373;
+    border-top: 0;
+    border-left: 0;
+    font-weight: 500;
+  }
+  #letter .estimation .table thead th:last-child {
+    border-right: 0;
+  }
+  #letter .estimation .table th:first-child,
+  #letter .estimation .table td:first-child {
+    width: 40%;
+  }
+  #letter .estimation .table th:last-child,
+  #letter .estimation .table td:last-child {
+    width: 60%;
+  }
+  #letter .estimation .table tbody td {
+    border-top: 0;
+    border: 1.5px solid #737373;
+    border-bottom: 0;
+    border-left: 0;
+  }
+  #letter .estimation .table tbody td:last-child {
+    border-right: 0;
+  }
+  #letter .estimation .table tbody td:first-child {
+    text-align: center;
+  }
+  #letter .participant {
+    border: 1.5px solid #737373;
+    border-left: 0;
+  }
+  #letter .participant .participant--title {
+    padding: 1rem 0 1rem 1rem;
+    font-weight: 500;
+    border-left: 1.5px solid #737373;
+  }
+  #letter .participant .participant--list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #letter .participant .participant--list .participant--list--column {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1.5px solid #737373;
+    border-bottom: 0;
+    border-right: 0;
+    padding: 0.45rem;
+  }
+  #letter .applicant {
+    display: flex;
+    gap: 1rem;
+    border: 1.5px solid #737373;
+    border-top: 0;
+  }
+  #letter .applicant .applicant--wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    padding: 0.45rem;
+  }
+  #letter .applicant .applicant--wrapper .applicant--title {
+    width: 120px;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  #letter .applicant .applicant--wrapper .applicant--content {
+    width: 240px;
+  }
+  #letter .applicant .applicant--wrapper:first-child {
+    border-right: 1.5px solid #737373;
+  }
+  #letter .information {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1.5px solid #737373;
+    border-top: 0;
+    font-weight: 500;
+  }
+  #letter .information .information--note,
+  #letter .information .information--date {
+    padding: 0.45rem;
+  }
+  #letter .information .information--note {
+    border-right: 1.5px solid #737373;
+  }
+  #letter .signature {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-top: 0.15rem;
+    border: 1.5px solid #737373;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  #letter .signature .signature--wrapper {
+    width: 100%;
+  }
+  #letter .signature .signature--wrapper .header,
+  #letter .signature .signature--wrapper footer {
+    border: 1.5px solid #737373;
+    padding: 0.25rem;
+  }
+  #letter .signature .signature--wrapper .header {
+    border-right: 0;
+  }
+  #letter .signature .signature--wrapper footer {
+    border-top: 0;
+    border-right: 0;
+  }
+  #letter .signature .signature--wrapper main {
+    border: 1.5px solid #737373;
+    border-top: 0;
+    border-right: 0;
+    padding: 0.25rem;
+  }
+  #letter .signature .signature--wrapper main img {
+    width: 50%;
+    margin: auto;
+  }
+  

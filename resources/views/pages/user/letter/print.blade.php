@@ -149,14 +149,15 @@
     </section>
 </section>
 
+@if ($signatures)
 {{-- tanda tangan --}}
 <section class="signature">
     {{-- Deputy --}}
     <section class="signature--wrapper">
         <section class="header">Mengetahui</section>
         <main>
-            <img width="200" src="{{ asset('storage/signatures/' . $letter->validation->deputySignature->image) }}" alt="">
-            <p>( {{ $letter->validation->deputySignature->user->name }} )</p>
+            <img width="200" src="{{ asset('storage/signatures/' . $letter?->validation?->deputySignature?->image) }}" alt="">
+            <p>( {{ $letter?->validation?->deputySignature?->user?->name }} )</p>
         </main>
         <footer>Deputy</footer>
     </section>
@@ -165,8 +166,8 @@
     <section class="signature--wrapper">
         <section class="header">Disetujui</section>
         <main>
-            <img width="200" src="{{ asset('storage/signatures/' . $letter->validation->managerSignature->image) }}" alt="">
-            <p>( {{ $letter->validation->managerSignature->user->name }} )</p>
+            <img width="200" src="{{ asset('storage/signatures/' . $letter?->validation?->managerSignature?->image) }}" alt="">
+            <p>( {{ $letter?->validation?->managerSignature?->user?->name ?? 'Tidak ada data' }} )</p>
         </main>
         <footer>Atasan Pemohon</footer>
     </section>
@@ -175,10 +176,11 @@
     <section class="signature--wrapper">
         <section class="header">User</section>
         <main>
-            <img src="{{ asset('storage/signatures/' . $letter->validation->applicantSignature->image) }}" alt="">
-            <p>( {{ $letter->validation->applicantSignature->user->name }} )</p>
+            <img src="{{ asset('storage/signatures/' . $letter?->validation?->applicantSignature?->image) }}" alt="">
+            <p>( {{ $letter?->validation?->applicantSignature?->user?->name ?? 'Tidak ada data' }} )</p>
         </main>
         <footer>Nama & Tandatangan</footer>
     </section>
 </section>
+@endif
 @endsection

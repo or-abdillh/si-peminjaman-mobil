@@ -183,9 +183,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-
-        /*
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
+        /*  
          * Package Service Providers...
          */
 
@@ -214,7 +213,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
     ])->toArray(),
 
 ];

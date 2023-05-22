@@ -62,7 +62,6 @@ Route::group(['middleware' => ['auth', 'role:user']], function () {
 
     // Print dan Download
     Route::get('/letter/print/{id}', [UserLetterController::class, 'print'])->name('user.letter.print');
-    Route::get('/letter/download/{id}', [UserLetterController::class, 'download'])->name('user.letter.download');
 
     // Konfirmasi selesai menggunakan unit mobil
     Route::put('/letter/confirmation/{id}', [UserLetterController::class, 'confirmation'])->name('user.letter.confirmation');

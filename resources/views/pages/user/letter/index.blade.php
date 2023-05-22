@@ -147,8 +147,6 @@
         <section class="col-3">
             <section class="card">
                 <section class="card-body row">
-                    {{-- tombol download surat --}}
-                    <a href="{{ route('user.letter.download', $letterLastAccepted->id) }}" class="col-12 btn btn-primary">Unduh</a>
                     {{-- cetak surat --}}
                     <a href="{{ route('user.letter.print', $letterLastAccepted->id) }}" target="_blank" class="col-12 btn btn-success mb-3">Cetak</a>
                     {{-- konfirmasi selesai --}}

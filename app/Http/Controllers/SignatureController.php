@@ -27,7 +27,7 @@ class SignatureController extends Controller
         } else {
             $route = route('signature.store');
             $usedByLetter = 0;
-        } 
+        }
 
         // Kirim data ke view
         $data = [
@@ -59,7 +59,7 @@ class SignatureController extends Controller
         ]);
 
         // Upload tanda tangan ke storage
-        $fileName = $this->siganatureUploadToStorage($validate['image']);        
+        $fileName = $this->siganatureUploadToStorage($validate['image']);
 
         // simpan informasi filename ke dalam database
         Signature::create([
@@ -107,7 +107,7 @@ class SignatureController extends Controller
         $oldFilePath = 'public/signatures/' . $signature->image;
 
         // cek apakah file tersebut masih ada di dalam storage
-        if ( Storage::exists($oldFilePath) ) {
+        if (Storage::exists($oldFilePath)) {
             // hapus file lama
             Storage::delete($oldFilePath);
 
@@ -119,7 +119,7 @@ class SignatureController extends Controller
         $fileName = $this->siganatureUploadToStorage($validate['image']);
 
         // update data siganature dengan yang baru
-        $signature->update([ 'image' => $fileName ]);
+        $signature->update(['image' => $fileName]);
 
         // berikan notifikasi berhasil melakukan perubahan
         notyf()->addSuccess('Berhasil meperbaharui tanda tangan milik ' . Auth::user()->name);
@@ -137,12 +137,12 @@ class SignatureController extends Controller
         $signature = Signature::findOrFail($id);
 
         // buat full path dari file signature yang ada di storage
-        $filenPath = 'public/signatures/' . $signature->image;
+        $filePath = 'public/signatures/' . $signature->image;
 
         // cek apakah file tersebut ada
-        if ( Storage::exists($filenPath) ) {
+        if (Storage::exists($filePath)) {
             // hapus dari storage
-            Storage::delete($filenPath);
+            Storage::delete($filePath);
 
             // berikan notifikasi berhasil di hapus
             notyf()->addInfo('Berhasil menghapus file tanda tangan dari storage');
@@ -176,7 +176,7 @@ class SignatureController extends Controller
 
         // membuat path dari file ke dalam storage folder
         $storagePath = storage_path('app/public/signatures/' . $fileName);
-        
+
         // memasukkan file ke dalam storage
         file_put_contents($storagePath, $decodedImage);
 
