@@ -126,6 +126,7 @@
                                     <th>Atasan</th>
                                     <th>Diajukan</th>
                                     <th>Peserta</th>
+                                    <th>Lampiran</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -141,6 +142,13 @@
                                     </td>
                                     <td>{{ date('D, j F Y H:i', strtotime(@$letter->created_at)) }}</td>
                                     <td>{{ @$letter->participants->count() }} <i class="fa-solid fa-user-group"></i></td>
+                                    <td class="text-center">
+                                      @if ($letter->attachment)
+                                      <a href="{{ asset('storage/attachments/' . @$letter->attachment) }}" class="text-info me-2 font-weight-bold text-xs" target="_blank">Lihat Lampiran</a>
+                                      @else
+                                      Tidak ada lampiran
+                                      @endif
+                                    </td>
                                     <td class="text-center">
                                         {{-- tombol untuk memunculkan modal menyetujui --}}
                                         <a href="javascript;;" data-letter="{{ json_encode([ 'id' => @$letter->id, 'user_id' => @$letter->user_id ]) }}" data-role="btn-confirm" data-bs-toggle="modal" data-bs-target="#formConfirmModal" class="text-success me-2 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Konfirmasi">Konfirmasi</a>

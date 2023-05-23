@@ -123,9 +123,9 @@
             <section class="card">
                 <section class="card-body row">
                     {{-- lihat pengajuan --}}
-                    <button type="button" class="col btn btn-primary" data-bs-toggle="modal" data-bs-target="#showLetterModal">Lihat</button>
+                    <button type="button" class="col-12 btn btn-primary" data-bs-toggle="modal" data-bs-target="#showLetterModal">Lihat</button>
                     {{-- hapus pengajuan --}}
-                    <button type="button" class="col btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteLetterModal">Batalkan</button>
+                    <button type="button" class="col-12 btn btn-danger mb-0" data-bs-toggle="modal" data-bs-target="#deleteLetterModal">Batalkan</button>
                 </section>
             </section>
         </section>
@@ -176,7 +176,7 @@
     {{-- form pengajuan peminjaman --}}
     <section class="row mb-4">
 
-        <form action="{{ route('user.letter.store') }}" method="POST" class="col-lg-8 row">
+        <form action="{{ route('user.letter.store') }}" method="POST" enctype="multipart/form-data" class="col-lg-8 row">
             {{-- form utama --}}
             <section class="col-12 mb-4">
                 <section class="card">
@@ -235,6 +235,17 @@
                                 <label>Tempat jemput</label>
                                 <input type="text" class="form-control @error('pickup_place') is-invalid @enderror" name="pickup_place" placeholder="cnth: Lobby depan atau belakang, Lobby Dormitory, Area jualan cafe, dll" required>
                                 @error('pickup_place')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </section>
+
+                            {{-- lampiran --}}
+                            <section class="mb-3">
+                                <label>Dokumen pendukung / PDF</label>
+                                <input type="file" class="form-control @error('attachment') is-invalid @enderror" name="attachment" accept="application/pdf">
+                                @error('attachment')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -461,6 +472,8 @@
                     </section>
                 </div>
                 <div class="modal-footer">
+                    {{-- lihat lampiran --}}
+                    <a href="{{ asset('storage/attachments/' . @$letterProcess->attachment) }}" target="_blank" class="btn btn-info">Lihat lampiran</a>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </section>
@@ -506,7 +519,7 @@
                 <div class="modal-body">
                   <p>Pengajuan anda pada kegiatan <strong>{{ $letterLastRejected->name }}</strong> ditolak oleh admin, dengan alasan sebagai berikut</p>
                   <div class="mb-2">
-                    <textarea readonly disabled cols="30" rows="5" class="form-control">{{ $letterLastRejected->feedback->body }}</textarea>
+                    <textarea readonly disabled cols="30" rows="5" class="form-control">{{ $letterLastRejected?->feedback?->body }}</textarea>
                   </div>
                 </div>
                 <div class="modal-footer">

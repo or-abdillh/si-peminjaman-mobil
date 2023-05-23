@@ -113,6 +113,7 @@ class LetterController extends Controller
             'destination_place' => 'required|string',
             'pickup_place' => 'required|string',
             'name' => 'required|string',
+            'attachment' => 'nullable|mimes:pdf',
             'estimation_times.*' => 'nullable',
             'estimations.*' => 'nullable',
             'participant_names.*' => 'nullable',
@@ -135,9 +136,6 @@ class LetterController extends Controller
                 'status' => null
             ]);
 
-            // beri noifikasi berhasil
-            notyf()->addSuccess('Berhasil mengirim pengajuan peminjaman mobil');
-
             // membuat data peserta ke dalam tabel Participant
             foreach ($validate['participant_names'] as $key => $participant) {
                 Participant::create([
@@ -146,9 +144,6 @@ class LetterController extends Controller
                     'gender' => $validate['participant_genders'][$key]
                 ]);
             }
-
-            // beri notifikasi berhasil
-            notyf()->addInfo('Peserta telah ditambahkan ke dalam kegiatan ' . $letter->name);
 
             // membuat estimasi kegiatan ke dalam tabel Activity
             foreach ($validate['estimations'] as $key => $estimation) {
@@ -159,8 +154,23 @@ class LetterController extends Controller
                 ]);
             };
 
-            // beri notifikasi berhasil
-            notyf()->addInfo('Detail kegiatan telah ditambahkan untuk kegiatan ' . $letter->name);
+            // upload dokumen pendukung
+            if ($request->hasFile('attachment')) {
+                // ambil file
+                $file = $request->file('attachment');
+
+                // generate nama dokumen
+                $filename = uniqid() . "." . $file->getClientOriginalExtension();
+
+                // simpan file ke storage/app/public/attachments
+                $file->storeAs('public/attachments', $filename);
+
+                // simpan informasi nama file ke dalam database
+                $letter->update(['attachment' => $filename]);
+            }
+
+            // beri noifikasi berhasil
+            notyf()->addSuccess('Berhasil mengirim pengajuan peminjaman mobil');
         } catch (QueryException $err) {
             notyf()->addError($err->getMessage());
         }
@@ -206,6 +216,15 @@ class LetterController extends Controller
 
         // hapus semua aktivitas yang terkait
         Activity::where('letter_id', $letter->id)->delete();
+
+        // hapus lampiran jika ada
+        if ($letter->attachment) {
+            // ambil path lampiran 
+            $path = 'public/attachments/' . $letter->attachment;
+
+            // apakah lampiran ada di storage
+            if (Storage::exists($path)) Storage::delete($path);
+        }
 
         // hapus pengajuan
         $letter->delete();
