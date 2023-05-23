@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Global routes
-Route::group(['middleware' => ['auth', 'role:manager|user|deputy']], function () {
+Route::group(['middleware' => ['auth', 'role:manager|user|deputy|admin']], function () {
 
     // Route resource
     Route::resource('/signature', SignatureController::class)->names('signature');

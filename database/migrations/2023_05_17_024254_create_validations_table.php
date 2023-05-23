@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('letter_id');
             $table->unsignedBigInteger('applicant_signature');
-            $table->unsignedBigInteger('deputy_signature')->nullable();
-            $table->unsignedBigInteger('manager_signature')->nullable();
+            $table->unsignedBigInteger('deputy_signature')->nullable()->default(null);
+            $table->unsignedBigInteger('manager_signature')->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('letter_id')->references('id')->on('letters');

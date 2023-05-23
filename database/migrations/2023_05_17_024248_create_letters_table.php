@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('car_id')->nullable();
+            $table->unsignedBigInteger('car_id')->nullable()->default(null);
             $table->dateTime('start_time');
             $table->dateTime('finish_time');
             $table->text('destination_place');
