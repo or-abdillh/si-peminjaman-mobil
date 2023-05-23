@@ -473,7 +473,9 @@
                 </div>
                 <div class="modal-footer">
                     {{-- lihat lampiran --}}
+                    @if ($letterProcess->attachment)
                     <a href="{{ asset('storage/attachments/' . @$letterProcess->attachment) }}" target="_blank" class="btn btn-info">Lihat lampiran</a>
+                    @endif
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </section>

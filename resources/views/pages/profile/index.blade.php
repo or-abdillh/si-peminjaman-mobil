@@ -48,7 +48,7 @@
                     {{-- Atasan --}}
                     <small>Atasan</small>
                     @foreach (auth()->user()?->managedBy as $manager)
-                        <p>{{ $manager?->user?->name ?? 'Tidak ada data' }}</p>
+                        <p>{{ $manager?->managerDetail?->name ?? 'Tidak ada data' }}</p>
                     @endforeach
                 </section>
             </section>

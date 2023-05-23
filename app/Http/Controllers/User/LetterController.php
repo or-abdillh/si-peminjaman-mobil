@@ -227,7 +227,7 @@ class LetterController extends Controller
         }
 
         // hapus pengajuan
-        $letter->delete();
+        $letter->forceDelete();
 
         // beri notfikasi berhasil
         notyf()->addSuccess('Berhasil membatalkan pengajuan peminjaman');
