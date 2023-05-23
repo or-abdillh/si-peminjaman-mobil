@@ -133,7 +133,7 @@
             No. HP
         </section>
         <section class="applicant--content">
-            : 08979688757
+            : {{ $letter->user?->phone_number ?? 'Tidak ada data' }}
         </section>
     </section>
 
