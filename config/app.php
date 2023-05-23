@@ -183,8 +183,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-
-        /*
+        /*  
          * Package Service Providers...
          */
 

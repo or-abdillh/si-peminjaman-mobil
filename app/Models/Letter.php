@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Letter extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $dates = ['deleted_at'];
 
     public function car()
     {
@@ -34,5 +37,10 @@ class Letter extends Model
     public function validation()
     {
         return $this->hasOne(Validation::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

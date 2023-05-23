@@ -8,15 +8,10 @@
                 
                 {{-- log out --}}
                 <li class="nav-item d-flex align-items-center"> 
-                    <a href="{{ route('logout') }}" class="nav-link text-body font-weight-bold px-0" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
+                    <a class="nav-link text-body font-weight-bold px-0">
                         <i class="fa fa-user me-sm-1"></i>
-                        <span class="d-sm-inline d-none">Log Out</span>
+                        <span class="d-sm-inline d-none">{{ auth()->user()->name }}</span>
                     </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </li>
 
                 {{-- toggler expanded sidebar --}}

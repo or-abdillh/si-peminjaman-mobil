@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('letter_id');
             $table->text('name');
             $table->enum('gender', ['Pria', 'Wanita']);
+            $table->timestamps();
 
             $table->foreign('letter_id')->references('id')->on('letters');
         });

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'position'
     ];
 
     /**
@@ -28,10 +31,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast.
@@ -54,11 +54,11 @@ class User extends Authenticatable
 
     public function employees()
     {
-        return $this->hasMany(UserManager::class, 'user_id');
+        return $this->hasMany(UserManager::class, 'manager_id');
     }
 
     public function managedBy()
     {
-        return $this->hasMany(UserManager::class, 'manager_id');
+        return $this->hasMany(UserManager::class, 'user_id');
     }
 }
