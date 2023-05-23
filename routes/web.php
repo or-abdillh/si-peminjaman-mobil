@@ -11,6 +11,7 @@ use App\Http\Controllers\Deputy\ValidationController as DeputyValidationControll
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\EmployeeController as ManagerEmployeeController;
 use App\Http\Controllers\Manager\ValidationController as ManagerValidationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\LetterController as UserLetterController;
 use App\Http\Controllers\SignatureController;
@@ -35,6 +36,10 @@ Route::group(['middleware' => ['auth', 'role:manager|user|deputy']], function ()
 
     // Route resource
     Route::resource('/signature', SignatureController::class)->names('signature');
+    Route::resource('/profile', ProfileController::class)->names('profile');
+
+    // Reset password
+    Route::put('/profile/password/reset', [ProfileController::class, 'reset'])->name('profile.password.reset');
 });
 
 // Admin Routes
