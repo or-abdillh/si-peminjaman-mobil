@@ -41,6 +41,9 @@ Route::group(['middleware' => ['auth', 'role:manager|user|deputy|admin']], funct
 
     // Reset password
     Route::put('/profile/password/reset', [ProfileController::class, 'reset'])->name('profile.password.reset');
+
+    // Upload profile picture
+    Route::post('/profile/picture', [ProfileController::class, 'changeProfilePicture'])->name('profile.picture.change');
 });
 
 // Admin Routes

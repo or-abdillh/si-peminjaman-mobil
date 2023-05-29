@@ -26,7 +26,11 @@
             <section class="card-body">
                 <section class="w-full d-flex justify-content-center">
                     {{-- foto profile --}}
+                    @if ( is_null( auth()->user()->picture ) )
                     <div class="avatar mb-3" style="background-image: url({{ asset('/images/avatar.png') }});"></div>
+                    @else
+                    <div class="avatar mb-3" style="background-image: url({{ asset('/storage/pictures/' . auth()->user()->picture) }});"></div>
+                    @endif
                 </section>
                 {{-- informasi pribadi --}}
                 <section class="mb-4">
@@ -108,6 +112,30 @@
                 
                 <button type="submit" class="btn btn-primary" >Save Changes</button>
 
+            </form>
+        </section>
+
+        {{-- ubah profile picture --}}
+        <section class="card mb-4">
+            <section class="card-header d-flex justify-content-between">
+                <section>
+                    <h5>Ubah Profile Picture</h5>
+                    <small>Upload berkas foto anda dalam bentuk PNG atau JPG</small>
+                </section>
+                <section class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="fa-solid text-lg fa-image"></i>
+                </section>
+            </section>
+            <form action="{{ route('profile.picture.change') }}" method="POST" class="card-body" enctype="multipart/form-data">
+                @csrf
+                <label>Upload berkas</label>
+                <input type="file" name="picture" class="form-control mb-3 @error('picture') 'is-invalid' @enderror" accept=".png, .jpg, .jpeg" required>
+                @error('picture')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                <button type="submit" class="btn btn-primary">Upload</button>
             </form>
         </section>
 
