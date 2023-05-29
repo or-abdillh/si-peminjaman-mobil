@@ -15,10 +15,10 @@ class ArchiveController extends Controller
         $letters = Letter::withTrashed()->get();
 
         // ambil semua surat yang disetujui
-        $accepteds = Letter::withTrashed()->whereNotNull('car_id')->where('status', true)->count();
+        $accepteds = Letter::withTrashed()->where('status', true)->count();
 
         // ambil semua surat yang ditolak
-        $rejecteds = Letter::withTrashed()->whereNotNull('car_id')->whereNotNull('status')->where('status', false)->count();
+        $rejecteds = Letter::withTrashed()->whereNotNull('status')->where('status', false)->count();
 
         // ambil semua surat yang masih di proses
         $processes = Letter::whereNull('car_id')->whereNull('status')->count();
