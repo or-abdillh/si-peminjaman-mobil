@@ -5,7 +5,7 @@
 <style>
 
 .avatar { 
-    background-postion: center;
+    background-position: center;
     background-size: cover;
     border-radius: 50%;
     width: 160px; 
