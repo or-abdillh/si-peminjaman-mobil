@@ -135,24 +135,24 @@
                 </a>
             </li>
             @endif
+            
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Area Pengguna</h6>
+            </li>
 
             @if ( auth()->user()->hasRole('admin') )
             {{-- Arsip --}}
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link {{ request()->routeIs('admin.archive.index') ? 'active' : '' }}" href="{{ route('admin.archive.index') }}">
                     {{-- icon --}}
                     <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-regular fa-folder-open text-dark"></i>
+                        <i class="fa-regular fa-folder-open {{ request()->routeIs('admin.archive.index') ? '' : 'text-dark' }}"></i>
                     </div>
                     {{-- link title --}}
                     <span class="nav-link-text ms-1">Arsip</span>
                 </a>
             </li>
             @endif
-
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Area Pengguna</h6>
-            </li>
 
             {{-- log out --}}
             <li class="nav-item">
