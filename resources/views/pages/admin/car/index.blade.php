@@ -228,46 +228,56 @@
 
 @push('after-scripts')
     
-<script>
+<script type="text/javascript">
 
 window.addEventListener('DOMContentLoaded', () => {
 
+    // ambil semua button edit pada tabel
     const btnEdits = document.querySelectorAll('[data-role=btn-edit]')
+    
+    // ambil form edit pada modal edit mobil
     const editForm = {
         name: document.querySelector('#formEditModal [name=name]'),
         options: document.querySelectorAll('#formEditModal select option'),
         form: document.querySelector('#formEditModal form'),
     }
 
+    // buat method untuk auto selection pada option select yang sesuai dengan data lama
     const selected = val => {
         editForm.options.forEach(opt => {
             if ( opt.value == val ) opt.setAttribute('selected', true)
         })
     }
 
+    // munculkan modal edit mobil saat button edit satu per satu di klik
     btnEdits.forEach(btn => {
         btn.addEventListener('click', () => {
-            // parse
+            // ambil data mobi yang akan di edit
             const { name, id, status } = JSON.parse( btn.dataset.car )
 
+            // melakukan auto fill pada form modal edit mobil
             editForm.name.value = name
             editForm.form.setAttribute('action', '/admin/car/' + id)
             selected(status)
-
         })
     })
 
+    // ambil semua button delete pada tabel
     const btnDeletes = document.querySelectorAll('[data-role=btn-delete]')
+    
+    // ambil form hapus pada modal hapus mobil
     const deleteForm = {
         form: document.querySelector('#formDeleteModal form'),
         body: document.querySelector('#formDeleteModal p')
     }
 
+    // munculkan modal hapus mobil pada saat button delete di tabel satu per satu di klik
     btnDeletes.forEach(btn => {
         btn.addEventListener('click', () => {
-            // parse
+            // pambil data mobil yang akan dihapus
             const { name, id } = JSON.parse( btn.dataset.car )
 
+            // melakukan auto fill pada form hapus modal mobil
             deleteForm.form.setAttribute('action', '/admin/car/' + id)
             deleteForm.body.innerHTML = `Apakah anda yakin ingin menghapus unit <strong>${ name }</strong> dari database ? tindakan ini bersifat permanen`
         })

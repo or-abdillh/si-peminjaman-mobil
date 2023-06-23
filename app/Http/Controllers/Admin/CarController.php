@@ -13,17 +13,20 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        // ambil semua data mobil
         $cars = Car::all();
-        
-        $available = $cars->filter(function($car) {
+
+        // kumpulkan data mobil yang tersedia atau bisa digunakan
+        $available = $cars->filter(function ($car) {
             return @$car->status == false;
         });
 
-        $used = $cars->filter(function($car) {
+        // kumpulkan data mobil yang tidak tersedia atau sedang digunakan
+        $used = $cars->filter(function ($car) {
             return @$car->status == true;
         });
 
+        // kirim data ke view
         $data = [
             'cars' => $cars,
             'available' => $available,
@@ -31,6 +34,7 @@ class CarController extends Controller
             'page' => 'Unit Mobil'
         ];
 
+        // render view
         return view('pages.admin.car.index', $data);
     }
 
@@ -40,7 +44,6 @@ class CarController extends Controller
     public function create()
     {
         //
-        return view('pages.admin.car.form');
     }
 
     /**
@@ -48,17 +51,20 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validasi request yang masuk
         $validate = $request->validate([
             'name' => 'required',
             'status' => 'required'
         ]);
 
+        // buat data mobil baru berdasarkan request yang masuk
         $car = Car::create($validate);
+
+        // beri notiikasi berhasil
         notyf()->addSuccess("Berhasil menambahkan $car->name ke dalam database");
 
+        // kembali ke halaman sebelumnya
         return redirect()->back();
-
     }
 
     /**
@@ -82,17 +88,22 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // ambil data mobil yang ingin di ubah datanya
         $car = Car::findOrFail($id);
 
+        // validasi request yang masuk
         $validate = $request->validate([
             'name' => 'required',
             'status' => 'required'
         ]);
 
+        // melakukan perubahan data mobil berdasarkan request yang masuk
         $car->update($validate);
 
+        // beri notifikasi berhasil
         notyf()->addSuccess("Berhasil melakukan perubahan data unit $car->name");
+
+        // kembali ke halaman sebelumnya
         return redirect()->back();
     }
 
@@ -101,11 +112,16 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // ambil data mobil yang akan dihapus
         $car = Car::findOrFail($id);
 
+        // hapus data mobil dari database
         $car->delete();
+
+        // beri notfikasi berhasil
         notyf()->addSuccess('Berhasil menghapus unit dari database');
+
+        // kembali ke halaman sebelumnya
         return redirect()->back();
     }
 }
