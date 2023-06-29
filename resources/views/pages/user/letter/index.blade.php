@@ -434,7 +434,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Kelamin</th>
+                                        <th>Gender</th>
                                     </tr>
                                 </thead>
                                 <tbody>
