@@ -176,7 +176,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Tipe Pengguna</th>
-                                    <th>Terdaftar sejak</th>
+                                    <th>Terdaftar pada</th>
                                     <th>Terakhir diperbarui</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -184,7 +184,13 @@
                             <tbody>
                                 @foreach (@$users->concat(@$managers)->concat(@$deputies) as $user)
                                 <tr>
-                                    <td>{{ @$user->name }}</td>
+                                    <td>
+                                        @if (@$user->picture)
+                                        <a href="{{ asset('storage/pictures/' . @$user->picture) }}" target="_blank" title="Profile Picture"><i class="fa-solid fa-camera"></i> {{ @$user->name }}</a>
+                                        @else
+                                        {{ @$user->name }}
+                                        @endif
+                                    </td>
                                     <td>{{ @$user->email }}</td>
                                     <td class="text-center">{{ @$user->roles->first()->name }}</td>
                                     <td>{{ date('D, j F Y H:i', strtotime(@$user->created_at)) }}</td>

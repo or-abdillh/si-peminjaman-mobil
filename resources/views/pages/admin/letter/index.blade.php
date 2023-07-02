@@ -134,7 +134,13 @@
                                 @foreach ($letterNotConfirmeds as $letter)
                                 <tr>
                                     <td>{{ $letter->name }}</td>
-                                    <td>{{ $letter->user->name }}</td>
+                                    <td>
+                                      @if (@$letter?->user->picture)
+                                        <a href="{{ asset('storage/pictures/' . @$letter?->user->picture) }}" target="_blank" title="Profile Picture"><i class="fa-solid fa-camera"></i> {{ @$letter?->user->name }}</a>
+                                      @else
+                                      {{ @$letter?->user->name }}
+                                      @endif
+                                    </td>
                                     <td>
                                         @foreach (@$letter->user->managedBy as $manager)
                                         <p class="mb-0">{{ $manager->managerDetail->name }}</p>

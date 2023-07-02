@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -137,6 +138,51 @@ class ProfileController extends Controller
 
         // beri notifikasi
         notyf()->addInfo('Berhasil melakukan perubahan kata sandi');
+
+        // kembali ke halaman sebelumnya
+        return redirect()->back();
+    }
+
+    // method untuk melakukan perubahan pada profile picture user
+    public function changeProfilePicture(Request $request)
+    {
+        // validasi berkas yang dikirimkan harus PNG, JPG, atau JPEG
+        $validate = $request->validate([
+            'picture' => 'required|file|mimes:jpeg,jpg,png'
+        ]);
+
+        // ambil data user yang sedang login
+        $user = User::findOrFail(Auth::user()->id);
+
+        // ambil file
+        $file = $request->file('picture');
+
+        // generate nama dokumen
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // simpan berkas ke storage/app/public/pictures
+        $file->storeAs('public/pictures', $filename);
+
+        // cek apakah user sebelumnya pernah mengupload berkas foto
+        if (!is_null($user->picture)) {
+            // ambil nama file lama
+            $oldfile = $user->picture;
+
+            // generate path dari file lama
+            $oldpath = 'public/pictures/' . $oldfile;
+
+            // cek apakah berkas masih ada di storage
+            if (Storage::exists($oldpath)) {
+                // jika ada, hapus file lama
+                Storage::delete($oldpath);
+            }
+        }
+
+        // melakukan perubahan data picture pada user
+        $user->update(['picture' => $filename]);
+
+        // berikan notifikasi
+        notyf()->addSuccess('Berhasil memperbaharui profile picture');
 
         // kembali ke halaman sebelumnya
         return redirect()->back();

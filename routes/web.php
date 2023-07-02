@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArchiveController as AdminArchiveController;
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FeedbackController as AdminFeedbackController;
@@ -40,6 +41,9 @@ Route::group(['middleware' => ['auth', 'role:manager|user|deputy|admin']], funct
 
     // Reset password
     Route::put('/profile/password/reset', [ProfileController::class, 'reset'])->name('profile.password.reset');
+
+    // Upload profile picture
+    Route::post('/profile/picture', [ProfileController::class, 'changeProfilePicture'])->name('profile.picture.change');
 });
 
 // Admin Routes
@@ -54,6 +58,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::resource('/admin/letter', AdminLetterController::class)->names('admin.letter');
     Route::resource('/admin/letter/feedback', AdminFeedbackController::class)->names('admin.letter.feedback');
     Route::resource('/admin/validation', AdminValidationController::class)->names('admin.validation');
+
+    // Arsip surat
+    Route::get('/admin/archive', [AdminArchiveController::class, 'index'])->name('admin.archive.index');
 });
 
 // User Routes
