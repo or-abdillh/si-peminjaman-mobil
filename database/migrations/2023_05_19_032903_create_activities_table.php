@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('estimation_time');
             $table->timestamps();
 
-            $table->foreign('letter_id')->references('id')->on('letters');
+            $table->foreign('letter_id')->references('id')->on('letters')->onDelete('cascade');
         });
     }
 

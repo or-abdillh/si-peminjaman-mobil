@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\LetterController as UserLetterController;
 use App\Http\Controllers\SignatureController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -98,4 +99,9 @@ Route::group(['middleware' => ['auth', 'role:deputy']], function () {
 
     // Route resource
     Route::resource('/deputy/validation', DeputyValidationController::class)->names('deputy.validation');
+});
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage link generated successfully.';
 });
