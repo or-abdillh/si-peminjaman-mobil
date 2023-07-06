@@ -3,6 +3,28 @@
 
 Studi kasus Kantor Tata Usaha SMP SMA Global Islamic Boarding School (GIBS)
 
+Daftar Isi
+- [Sistem Informasi Peminjaman Mobil Bertanda Tangan Digital](#sistem-informasi-peminjaman-mobil-bertanda-tangan-digital)
+	- [Fitur Utama](#fitur-utama)
+	- [Role Pengguna](#role-pengguna)
+	- [Database](#database)
+	- [Requirements](#requirements)
+	- [Instalasi](#instalasi)
+	- [Struktur Project](#struktur-project)
+		- [Models](#models)
+		- [Controllers](#controllers)
+		- [Views](#views)
+		- [Storage](#storage)
+	- [Fitur dan Penggunaan](#fitur-dan-penggunaan)
+		- [Relasi](#relasi)
+		- [Konfimasi Pengajuan oleh Pemohon](#konfimasi-pengajuan-oleh-pemohon)
+		- [Konfirmasi Pengajuan oleh Admin](#konfirmasi-pengajuan-oleh-admin)
+		- [Proses Legalisir Oleh Manager](#proses-legalisir-oleh-manager)
+		- [Proses Legalisir Oleh Deputy](#proses-legalisir-oleh-deputy)
+		- [Mengambil tanda tangan pada legalisir](#mengambil-tanda-tangan-pada-legalisir)
+		- [Mengambil data karyawan dan manager](#mengambil-data-karyawan-dan-manager)
+
+
 ## Fitur Utama
 Beberapa fitur utama pada sistem informasi ini adalah sebagai berikut :
 - Form Pengajuan Peminjaman Online
@@ -192,7 +214,7 @@ Direktori ini digunakan dalam menyimpan file hasil dari fitur rekam tanda tangan
 |  |  |  |  |_ 6474237ad0840.jpg
 ```
 Direktori ini secara otomatis akan dibuatkan *symbolic link* ke direktori public saat menjalankan perintah `php artisan storage:link`, sehingga proses pemanggilan file bisa menggunakan method ` asset() `
-```blade
+```html
   <img src="{{ asset('storage/signatures/6474237ad0840.jpg') }}" />
   <img src="{{ asset('storage/pictures/' . auth()->user()->picture) }}" />
   <a href="{{ asset('storage/attachments/647435c8cbe92.pdf') }}">Lihat lampiran</a>

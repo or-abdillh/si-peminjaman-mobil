@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
@@ -144,8 +145,24 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        // Ambil data usre yang akan di hapus
+        // Ambil data user yang akan di hapus
         $user = User::findOrFail($id);
+
+        // Ambil data tanda tangan si user
+        $signature = $user?->signature;
+
+        // hapus file tanda tangan jika ada di storage
+        if (Storage::exists('public/signatures/' . $signature?->image)) {
+            Storage::delete('public/signatures/' . $signature?->image);
+        }
+
+        // hapus semua surat pengajuan yang pernah diajukan oleh user
+        foreach ($user->letters as $letter) {
+            $letter->forceDelete();
+        }
+
+        // hapus tanda tangan
+        $signature?->delete();
 
         // Mengahapus data pengguna
         $user->delete();

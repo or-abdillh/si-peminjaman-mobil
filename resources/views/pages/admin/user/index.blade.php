@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Pengguna</p>
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total User</p>
                                     <h5 class="font-weight-bolder mb-0">
                                         {{-- Melakukan perhitungan jumlah record yang didapat --}}
                                         {{ count( @$users ) + count( @$deputies ) + count( @$managers ) }} Pengguna

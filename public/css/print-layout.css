@@ -96,7 +96,7 @@
   #letter .estimation .table tbody td:last-child {
     border-right: 0;
   }
-  #letter .estimation .table tbody td:first-child {
+  #letter .estimation .table tbody td {
     text-align: center;
   }
   #letter .participant {

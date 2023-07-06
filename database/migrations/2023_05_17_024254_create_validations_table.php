@@ -21,10 +21,10 @@ return new class extends Migration
             $table->unsignedBigInteger('manager_signature')->nullable()->default(null);
             $table->timestamps();
 
-            $table->foreign('letter_id')->references('id')->on('letters');
-            $table->foreign('applicant_signature')->references('id')->on('signatures');
-            $table->foreign('deputy_signature')->references('id')->on('signatures');
-            $table->foreign('manager_signature')->references('id')->on('signatures');
+            $table->foreign('letter_id')->references('id')->on('letters')->onDelete('cascade');
+            $table->foreign('applicant_signature')->references('id')->on('signatures')->onDelete('cascade');
+            $table->foreign('deputy_signature')->references('id')->on('signatures')->onDelete('cascade');
+            $table->foreign('manager_signature')->references('id')->on('signatures')->onDelete('cascade');
         });
 
         Schema::enableForeignKeyConstraints();

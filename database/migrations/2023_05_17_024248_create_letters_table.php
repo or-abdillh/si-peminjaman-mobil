@@ -25,8 +25,8 @@ return new class extends Migration
             $table->boolean('status')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('car_id')->references('id')->on('cars');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
         });
 
         Schema::enableForeignKeyConstraints();
