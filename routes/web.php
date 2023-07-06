@@ -18,7 +18,10 @@ use App\Http\Controllers\User\LetterController as UserLetterController;
 use App\Http\Controllers\SignatureController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +108,16 @@ Route::get('/storage-link', function () {
     Artisan::call('storage:link');
     return 'Storage link generated successfully.';
 });
+
+Route::get('/storage/{any}', function ($any) {
+    $path = storage_path('app/public/' . $any);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $mime = File::mimeType($path);
+
+    return Response::make($file, 200, ['Content-Type' => $mime]);
+})->where('any', '.*');
