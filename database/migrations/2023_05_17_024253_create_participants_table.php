@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->timestamps();
 
-            $table->foreign('letter_id')->references('id')->on('letters');
+            $table->foreign('letter_id')->references('id')->on('letters')->onDelete('cascade');
         });
 
         Schema::enableForeignKeyConstraints();
