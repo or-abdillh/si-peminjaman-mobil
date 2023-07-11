@@ -2,36 +2,36 @@
 
 - [Dokumentasi: Sistem Informasi Peminjaman Mobil Bertanda Tangan Digital dengan Framework Laravel 10](#dokumentasi-sistem-informasi-peminjaman-mobil-bertanda-tangan-digital-dengan-framework-laravel-10)
 	- [1. Pendahuluan](#1-pendahuluan)
-		- [Deskripsi sistem informasi](#deskripsi-sistem-informasi)
-		- [Tujuan dokumentasi](#tujuan-dokumentasi)
-		- [Lingkup sistem informasi](#lingkup-sistem-informasi)
+		- [1.1. Deskripsi sistem informasi](#11-deskripsi-sistem-informasi)
+		- [1.2. Tujuan dokumentasi](#12-tujuan-dokumentasi)
+		- [1.3. Lingkup sistem informasi](#13-lingkup-sistem-informasi)
 	- [2. Persiapan](#2-persiapan)
-		- [Persyaratan sistem](#persyaratan-sistem)
-		- [Instalasi dan konfigurasi](#instalasi-dan-konfigurasi)
-		- [Konfigurasi database](#konfigurasi-database)
-		- [Pengaturan Tambahan](#pengaturan-tambahan)
+		- [2.1. Persyaratan sistem](#21-persyaratan-sistem)
+		- [2.2. Instalasi dan konfigurasi](#22-instalasi-dan-konfigurasi)
+		- [2.3. Konfigurasi database](#23-konfigurasi-database)
+		- [2.4. Pengaturan Tambahan](#24-pengaturan-tambahan)
 	- [3. Arsitektur Sistem](#3-arsitektur-sistem)
-		- [Arsitektur MVC (Model-View-Controller)](#arsitektur-mvc-model-view-controller)
-			- [1. Model](#1-model)
-			- [2. View](#2-view)
-			- [3. Controller](#3-controller)
-		- [Struktur direktori](#struktur-direktori)
-		- [Penjelasan komponen utama (Model, View, Controller)](#penjelasan-komponen-utama-model-view-controller)
-			- [1. Model](#1-model-1)
-			- [2. View](#2-view-1)
-		- [3. Controller](#3-controller-1)
-			- [Admin Controllers](#admin-controllers)
-			- [Auth Controllers](#auth-controllers)
-			- [Deputy Controllers](#deputy-controllers)
-			- [Manager Controllers](#manager-controllers)
-			- [User Controllers](#user-controllers)
-			- [Profile Controller](#profile-controller)
-			- [Signature Controller](#signature-controller)
-		- [Penjelasan mekanisme routing](#penjelasan-mekanisme-routing)
-			- [1. Definisi Route](#1-definisi-route)
-			- [2. Group Route](#2-group-route)
-			- [3. Resourceful Routing](#3-resourceful-routing)
-			- [4. Method dalam Controller](#4-method-dalam-controller)
+		- [3.1. Arsitektur MVC (Model-View-Controller)](#31-arsitektur-mvc-model-view-controller)
+			- [3.1.1. Model](#311-model)
+			- [3.1.2. View](#312-view)
+			- [3.1.3. Controller](#313-controller)
+		- [3.2. Struktur direktori](#32-struktur-direktori)
+		- [3.3. Penjelasan komponen utama (Model, View, Controller)](#33-penjelasan-komponen-utama-model-view-controller)
+			- [3.3.1. Model](#331-model)
+			- [3.3.2. View](#332-view)
+			- [3.3.3. Controller](#333-controller)
+				- [3.3.3.1. Admin Controllers](#3331-admin-controllers)
+				- [3.3.3.2. Auth Controllers](#3332-auth-controllers)
+				- [3.3.3.3. Deputy Controllers](#3333-deputy-controllers)
+				- [3.3.3.4. Manager Controllers](#3334-manager-controllers)
+				- [3.3.3.5. User Controllers](#3335-user-controllers)
+				- [3.3.3.6. Profile Controller](#3336-profile-controller)
+				- [3.3.3.7. Signature Controller](#3337-signature-controller)
+		- [3.4. Penjelasan mekanisme routing](#34-penjelasan-mekanisme-routing)
+			- [3.4.1. Definisi Route](#341-definisi-route)
+			- [3.4.2. Group Route](#342-group-route)
+			- [3.4.3. Resourceful Routing](#343-resourceful-routing)
+			- [3.4.4. Method dalam Controller](#344-method-dalam-controller)
 	- [4. Fitur-fitur](#4-fitur-fitur)
 		- [4.1. Autentikasi Pengguna](#41-autentikasi-pengguna)
 		- [4.2. Manajemen Peminjaman Mobil](#42-manajemen-peminjaman-mobil)
@@ -49,15 +49,15 @@
 
 ## 1. Pendahuluan
 
-### Deskripsi sistem informasi
+### 1.1. Deskripsi sistem informasi
 Sistem informasi berbasis web yang digunakan dalam membantu proses pengajuan peminjaman unit mobil pada SMP SMA Global Islamic Boarding School (GIBS) yang menerapkan teknologi tanda tangan digital berbasis gambar (Digital Signature) pada proses legalisir pengajuan peminjaman unit mobil 
 
 Sistem informasi ini mengambi studi kasus pada Kantor Tata Usaha / Administrasi dan General Service (GS) SMP SMA Global Islamic Boarding School (GIBS) 
 
-### Tujuan dokumentasi
+### 1.2. Tujuan dokumentasi
 Pembuatan dokumentasi ini bertujuan untuk membantu proses hand over atau peralihan user maupun developer menjadi lebih mudah dan cepat serta dengan harapan user maupun developer dapat memahami semua alur dan logika yang digunakan pada sistem informasi ini, sehingga tidak menutup keadanya pengembangan lebih lanjut dari sistem informasi ini
 
-### Lingkup sistem informasi
+### 1.3. Lingkup sistem informasi
 Lingkup sistem informasi peminjaman mobil bertanda tangan digital menggunakan framework Laravel 10 mencakup beberapa aspek berikut:
 
 1. Peminjaman Mobil: Sistem ini mepengguna untuk melakukan peminjaman mobil. Pengguna dapat melihat daftar mobil yang tersedia, memilih mobil yang ingin dipinjam, dan mengajukan permohonan peminjaman.
@@ -65,10 +65,10 @@ Lingkup sistem informasi peminjaman mobil bertanda tangan digital menggunakan fr
 3. Tanda Tangan Digital: Sistem ini mepengguna untuk melakukan tanda tangan digital sebagai tanda persetujuan dan konfirmasi atas peminjaman mobil. Tanda tangan digital yang dibuat oleh pengguna akan disimpan dan dihubungkan dengan peminjaman yang terkait
 
 ## 2. Persiapan
-### Persyaratan sistem
+### 2.1. Persyaratan sistem
 Sistem informasi ini menggunakan framework Laravel versi 10, menggunakan PHP versi 8, dan menggunakan MySQL sebagai database management sytem (DBMS)
 
-### Instalasi dan konfigurasi
+### 2.2. Instalasi dan konfigurasi
 Ikuti langkah - langkah berikut dalam menjalankan sistem ini secara lokal di komputer
 
 Cloning repository ini menggunakan GIT
@@ -119,7 +119,7 @@ Menjalankan server
 php artisan serve
 ```
 
-### Konfigurasi database
+### 2.3. Konfigurasi database
 Konfigurasi database dapat ditemukan pada `.env` yang memiliki konfigurasi default sebagai berikut:
 ```
 DB_CONNECTION=mysql
@@ -131,7 +131,7 @@ DB_PASSWORD=
 ```
 Lakukan perubahan pada konfigurasi jika terdapat perbedaan pada konfirgurasi bawaan dari sistem operasi atau DBMS yang digunakan
 
-### Pengaturan Tambahan
+### 2.4. Pengaturan Tambahan
 Jalankan perintah berikut untuk membuat sub direktori baru pada `storage` yang digunakan dalam menyimpan hasil upload dokumen, profile picture, dan signature dari user
 
 ```bash
@@ -142,19 +142,19 @@ Jika kesulitan dalam menggunakan command line, pembuatan sub direktori baru bisa
 
 ## 3. Arsitektur Sistem
 
-### Arsitektur MVC (Model-View-Controller)
+### 3.1. Arsitektur MVC (Model-View-Controller)
 Sistem ini dibangun menggunakan Arsitektur MVC yaitu sebuah pendekatan dalam pengembangan perangkat lunak yang memisahkan logika bisnis, tampilan, dan interaksi pengguna menjadi tiga komponen terpisah. Arsitektur ini bertujuan untuk meningkatkan pemeliharaan kode, memisahkan perhatian terhadap berbagai aspek sistem, dan mepengembangan yang lebih terstruktur.
 
-#### 1. Model
+#### 3.1.1. Model
 Model merupakan komponen yang bertanggung jawab untuk mengelola data dan logika bisnis dalam aplikasi. Model mewakili struktur data dan berisi operasi-operasi yang berkaitan dengan manipulasi data, validasi, dan aturan bisnis. Model tidak bergantung pada tampilan atau interaksi pengguna, dan dapat digunakan kembali dalam berbagai bagian aplikasi.
 
-#### 2. View
+#### 3.1.2. View
 View merupakan komponen yang mengatur tampilan antarmuka pengguna (UI) dan menampilkan informasi kepada pengguna. View bertanggung jawab untuk mengubah data dari Model menjadi tampilan yang dapat ditampilkan pengguna. View tidak mengandung logika bisnis, tetapi hanya fokus pada cara menampilkan data yang diberikan.
 
-#### 3. Controller
+#### 3.1.3. Controller
 Controller merupakan komponen yang bertanggung jawab untuk menerima input dari pengguna, memproses permintaan, dan berinteraksi dengan Model dan View. Controller menerima input dari pengguna melalui View, mengubah Model berdasarkan input tersebut, dan memperbarui tampilan yang ditampilkan oleh View. Controller juga mengatur alur logika bisnis dalam aplikasi.
 
-### Struktur direktori
+### 3.2. Struktur direktori
 Sistem informasi ini dibangun menggunakan framework Laravel sehingga memiliki struktur direktori default atau bawaan dari Laravel, berikut struktur direktori utama dalam di sistem:
 
 ```
@@ -188,9 +188,9 @@ si-peminjaman-mobil
 |-- .env
 ```
 
-### Penjelasan komponen utama (Model, View, Controller)
+### 3.3. Penjelasan komponen utama (Model, View, Controller)
 
-#### 1. Model
+#### 3.3.1. Model
 Model merupakan representasi dari tabel pada database, pada sistem informasi ini file file model dapat ditemukan pada `app/Models`
 
 ```
@@ -208,7 +208,7 @@ si-peminjaman-mobil
 |	|	|	|-- Validation.php
 ```
 
-#### 2. View
+#### 3.3.2. View
 View merupakan komponen yang bertanggung jawab dalam menampilkan output dari hasil pengolahan data oleh controller kepada user. 
 
 Sistem informasi ini menerapkan beberapa role / tipe pengguna yang telah dibahas [disini](#41-autentikasi-pengguna), sehingga struktur direktori untuk View pada sistem ini akan menyesuaikan dengan role / tipe penggunanya
@@ -245,7 +245,7 @@ View dalam struktur direktori tersebut ditempatkan di dalam direktori `resources
 3. `pages`: Direktori ini berisi tampilan halaman-halaman tertentu dalam aplikasi. Terdapat beberapa sub-direktori seperti `admin`, `deputy`, `manager`, `profile`, `signature`, dan `user` yang berisi tampilan halaman terkait dengan peran pengguna atau fitur tertentu dalam sistem.
 4. `dashboard.blade.php`: File ini berisi tampilan halaman dashboard yang merupakan halaman utama aplikasi setelah pengguna berhasil masuk.
 
-### 3. Controller
+#### 3.3.3. Controller
 Controller dalam aplikasi ini berada di dalam direktori app/Http/Controllers dan bertanggung jawab untuk menangani logika bisnis dan merespons permintaan pengguna. Struktur direktori Controller memisahkan berbagai peran dan fitur dalam aplikasi. 
 
 Sistem informasi ini menerapkan beberapa role / tipe pengguna yang telah dibahas [disini](#41-autentikasi-pengguna), sehingga struktur direktori untuk Controller pada sistem ini akan menyesuaikan dengan role / tipe penggunanya
@@ -281,7 +281,7 @@ si-peminjaman-mobil
 |	|	|	|	|-- SignatureController.php
 ```
 
-#### Admin Controllers
+##### 3.3.3.1. Admin Controllers
 1. `ArchieveController.php`: Controller ini bertanggung jawab untuk mengelola arsip surat pada peran admin. berisi tindakan (action) untuk menampilkan daftar arsip surat, mengelola kategori surat, dan lainnya.
 2. `CarController.php`: Controller ini menangani logika bisnis terkait dengan pengelolaan mobil pada peran admin. berisi tindakan untuk menampilkan daftar mobil, menambahkan mobil baru, mengedit atau menghapus data mobil, dan sebagainya.
 3. `DashboardController.php`: Controller ini mengatur logika bisnis yang terkait dengan tampilan dashboard untuk peran admin. berisi tindakan untuk menampilkan informasi statistik, data penting, atau laporan terkait dengan manajemen peminjaman mobil.
@@ -290,37 +290,37 @@ si-peminjaman-mobil
 6. `UserController.php`: Controller ini mengatur logika bisnis yang terkait dengan pengelolaan pengguna pada peran admin. berisi tindakan untuk menampilkan daftar pengguna, mengedit atau menghapus data pengguna, dan sebagainya.
 7. `ValidationController.php`: Controller ini bertanggung jawab untuk mengelola validasi peminjaman mobil pada peran admin. berisi tindakan untuk menampilkan daftar peminjaman yang perlu divalidasi, dan memberikan legalisir tanda tangan.
 
-#### Auth Controllers
+##### 3.3.3.2. Auth Controllers
 1. `LoginController.php`: Controller ini bertanggung jawab untuk mengelola proses otentikasi dan login pengguna. berisi tindakan untuk menampilkan halaman login, memvalidasi informasi login, dan mengautentikasi pengguna.
 2. `RegisterController.php`: Controller ini menangani proses pendaftaran pengguna baru. berisi tindakan untuk menampilkan halaman registrasi, memvalidasi informasi pendaftaran, dan menyimpan data pengguna baru ke dalam sistem.
 
-#### Deputy Controllers
+##### 3.3.3.3. Deputy Controllers
 1. `DashboardController.php`: Controller ini mengatur logika bisnis yang terkait dengan tampilan dashboard untuk peran deputy. berisi tindakan untuk menampilkan informasi statistik, data penting, atau laporan terkait dengan tugas dan tanggung jawab deputy.
 2. `ValidationController.php`: Controller ini bertanggung jawab untuk mengelola validasi peminjaman mobil pada peran deputy. berisi tindakan untuk menampilkan daftar peminjaman yang perlu divalidasi oleh deputy, menyetujui atau menolak peminjaman, dan sebagainya.
 
-#### Manager Controllers
+##### 3.3.3.4. Manager Controllers
 1. `DashboardController.php`: Controller ini mengatur logika bisnis yang terkait dengan tampilan dashboard untuk peran manager. berisi tindakan untuk menampilkan informasi statistik, data penting, atau laporan terkait dengan tugas dan tanggung jawab manager.
 2. `EmployeeController.php`: Controller ini bertanggung jawab untuk mengelola data karyawan pada peran manager. berisi tindakan untuk menampilkan daftar karyawan, menambahkan karyawan baru, mengedit atau menghapus data karyawan, dan sebagainya.
 3. `ValidationController.php`: Controller ini bertanggung jawab untuk mengelola validasi peminjaman mobil pada peran manager. berisi tindakan untuk menampilkan daftar peminjaman yang perlu divalidasi oleh manager berupa pemberian tanda tangan.
 
-#### User Controllers
+##### 3.3.3.5. User Controllers
 1. `DashboardController.php`: Controller ini mengatur logika bisnis yang terkait dengan tampilan dashboard untuk peran pengguna. berisi tindakan untuk menampilkan informasi pribadi, riwayat peminjaman, atau akses ke fitur-fitur lainnya yang relevan dengan peran pengguna.
 2. `LetterController.php`: Controller ini bertanggung jawab untuk mengelola peminjaman surat pada peran pengguna. berisi tindakan untuk menampilkan daftar surat yang dapat dipinjam, membuat peminjaman surat, melihat status peminjaman, dan sebagainya.
 
-#### Profile Controller
+##### 3.3.3.6. Profile Controller
 `ProfileController.php`: Controller ini menangani logika bisnis terkait dengan pengelolaan profil pengguna pada peran pengguna. berisi tindakan untuk menampilkan profil pengguna, mengedit atau memperbarui data pengguna, dan sebagainya.
 
-#### Signature Controller
+##### 3.3.3.7. Signature Controller
 `SignatureController.php`: Controller ini bertanggung jawab untuk mengelola tanda tangan digital pengguna pada peran pengguna. berisi tindakan untuk menampilkan halaman tanda tangan, menyimpan tanda tangan yang diunggah, dan sebagainya.
 
-### Penjelasan mekanisme routing
+### 3.4. Penjelasan mekanisme routing
 Routing adalah proses menentukan bagaimana aplikasi web merespons permintaan HTTP yang masuk dari pengguna. Routing menghubungkan URL dengan tindakan (action) yang sesuai dalam Controller untuk menangani permintaan tersebut.
 
 Dalam aplikasi ini, mekanisme routing diimplementasikan menggunakan framework Laravel. Framework ini menyediakan sintaks dan fitur yang kuat untuk mengatur routing dengan mudah dan efisien.
 
 Routing yang digunakan pada aplikasi ini bisa ditemui pada file `routes/web.php`
 
-#### 1. Definisi Route
+#### 3.4.1. Definisi Route
 Route adalah aturan yang menghubungkan URL dengan tindakan dalam Controller yang akan dijalankan. Setiap route memiliki URL dan metode HTTP tertentu yang akan memicu tindakan yang sesuai dalam Controller.
 
 Secara umum, definisi route terdiri dari URL, metode HTTP, dan tindakan yang akan dilakukan. Berikut adalah contoh definisi route pada sistem:
@@ -329,7 +329,7 @@ Secara umum, definisi route terdiri dari URL, metode HTTP, dan tindakan yang aka
 Route::post('/profile/picture', [ProfileController::class, 'changeProfilePicture'])->name('profile.picture.change');
 ```
 
-#### 2. Group Route
+#### 3.4.2. Group Route
 Grup route digunakan untuk mengelompokkan route yang memiliki karakteristik atau atribut yang sama. Ini mekita untuk menerapkan middleware, namespace, prefix, dan lainnya secara terpusat. Berikut adalah contoh penggunaan grup route didalam sistem:
 
 ```php
@@ -341,7 +341,7 @@ Route::group(['middleware' => ['auth', 'role:deputy']], function () {
 ```
 Pada contoh kode di atas, kita menggunakan `Route::group` untuk membuat grup route dengan middleware yang ditentukan. Middleware digunakan untuk menerapkan filter atau tindakan sebelum atau setelah menjalankan tindakan dalam `Controller`. Dalam contoh ini, kita menggunakan middleware `auth` dan `role:deputy` untuk memastikan pengguna yang mengakses route tersebut sudah terotentikasi dan memiliki peran sebagai `deputy`.
 
-#### 3. Resourceful Routing
+#### 3.4.3. Resourceful Routing
 Pada kode berikut, sistem menggunakan `Route::resource` untuk mendefinisikan route yang mengikuti pola CRUD (Create, Read, Update, Delete) untuk beberapa komponen seperti `car`, `user`, `letter`, `feedback`, dan `validation`. Resourceful routing secara otomatis menghasilkan rute dan tindakan dalam Controller yang sesuai dengan pola CRUD yang ditentukan.
 
 ```php
@@ -352,7 +352,7 @@ Route::resource('/admin/letter/feedback', AdminFeedbackController::class)->names
 Route::resource('/admin/validation', AdminValidationController::class)->names('admin.validation');
 ```
 
-#### 4. Method dalam Controller
+#### 3.4.4. Method dalam Controller
 Pada kode diatas juga menunjukkan contoh penggunaan tindakan dalam Controller yang akan dipanggil saat route tertentu diakses. Misalnya, `AdminDashboardController` memiliki method `index` yang akan dijalankan saat URL `/admin` diakses. Hal yang sama berlaku untuk `AdminCarController`, `AdminUserController`, `AdminLetterController`, `AdminFeedbackController`, `AdminValidationController`, dan `AdminArchiveController` yang masing-masing memiliki method yang sesuai untuk setiap operasi CRUD yang didefinisikan.
 
 
