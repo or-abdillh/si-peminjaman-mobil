@@ -33,10 +33,16 @@
 			- [3.4.3. Resourceful Routing](#343-resourceful-routing)
 			- [3.4.4. Method dalam Controller](#344-method-dalam-controller)
 	- [4. Fitur-fitur](#4-fitur-fitur)
-		- [4.1. Autentikasi Pengguna](#41-autentikasi-pengguna)
-		- [4.2. Manajemen Peminjaman Mobil](#42-manajemen-peminjaman-mobil)
-		- [4.3. Tanda Tangan Digital](#43-tanda-tangan-digital)
-		- [4.4. Manajemen Pelanggan](#44-manajemen-pelanggan)
+		- [4.1 Role / Tipe Pengguna](#41-role--tipe-pengguna)
+			- [4.1.1 Deeskripsi Fitur](#411-deeskripsi-fitur)
+			- [4.1.2 Alur Kerja](#412-alur-kerja)
+				- [4.1.2.1 Instalasi](#4121-instalasi)
+				- [4.1.2.2 Membuat Role Pengguna](#4122-membuat-role-pengguna)
+			- [4.1.3 Contoh Kode Penggunaan](#413-contoh-kode-penggunaan)
+		- [4.2. Autentikasi Pengguna](#42-autentikasi-pengguna)
+		- [4.3. Manajemen Peminjaman Mobil](#43-manajemen-peminjaman-mobil)
+		- [4.4. Tanda Tangan Digital](#44-tanda-tangan-digital)
+		- [4.5. Manajemen Pelanggan](#45-manajemen-pelanggan)
 	- [5. Model Data](#5-model-data)
 	- [6. Pengujian](#6-pengujian)
 	- [7. Konfigurasi Tambahan](#7-konfigurasi-tambahan)
@@ -358,28 +364,190 @@ Pada kode diatas juga menunjukkan contoh penggunaan tindakan dalam Controller ya
 
 ## 4. Fitur-fitur
 
-### 4.1. Autentikasi Pengguna
+### 4.1 Role / Tipe Pengguna
+Pada sistem ini menggunakan library [Laravel Spatie Permission](https://spatie.be/docs/laravel-permission/v5/introduction) untuk membuat dan mengelola tipe pengguna yang ada didalam sistem ini. Adapun untuk tipe pengguna yang berlaku didalam aplikasi ini adalah
+1. Admin
+2. User / Pemohon
+3. Manager / Atasan Pemohon
+4. Deputy / Kepala Sekolah
+
+#### 4.1.1 Deeskripsi Fitur
+Fitur ini memungkinkan Anda untuk mengelola peran pengguna dan hak akses mereka menggunakan Spatie Permission. Anda dapat membuat, mengedit, dan menghapus peran pengguna, serta menetapkan hak akses spesifik untuk setiap peran. Fitur ini memungkinkan Anda untuk mengatur dan mengendalikan tingkat akses pengguna dalam aplikasi Anda.
+
+#### 4.1.2 Alur Kerja
+Berikut adalah alur kerja dari penggunaan Spatie Permission ke dalam sistem
+
+##### 4.1.2.1 Instalasi
+Menggunakan Composer untuk melakukan instalasi library ke dalam sistem
+```bash
+ composer require spatie/laravel-permission
+```
+
+Menambahkan service provider baru ke dalam `config/app.php`
+```php
+'providers' => [
+    // ...
+    Spatie\Permission\PermissionServiceProvider::class,
+];
+```
+
+Menjalankan perintah untuk melakukan publish 
+```bash
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+
+Melakukan penambahan trait pada model User di `app/Models/User.php`
+```php
+use HasRoles;
+```
+
+Menjalankan Migrasi bawaan dari Spatie Permission
+```bash
+php artisan migrate
+```
+
+Secara otomatis akan terjadi penambahan beberapa tabel baru pada database yang digunakan Spatie Permission dalam menjalankan fiturnya. Berikut adalah beberapa tabel baru yang akan di `create` secara otomatis oleh Spatie
+1. `model_has_permission`,
+2. `model_has_roles`
+3. `permissions`
+4. `roles`
+5. `roles_has_permissions`
+
+##### 4.1.2.2 Membuat Role Pengguna
+Dengan menggunakan Spatie Permission kita dapat membuat bebeapa `role` atau tipe pengguna sesuai dengan kebutuhan sistem. Untuk membuat role pengguna kita dapat menggunakan fitur `Seeder` pada Laravel.
+
+Berikut `seeder` yang digunakan oleh sistem dalam membuat role pengguna pada file `database/seeders/RoleSeeder.php`
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+
+class RoleSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+        $roles = ['user', 'manager', 'deputy', 'admin'];
+
+        foreach($roles as $role) {
+            Role::create(["name" => $role]);
+        }
+    }
+}
+```
+Pada kode diatas kita menggunakan model `Role` dengan melakukan import model dari `Spatie\Permission\Models\Role`, dimana model ini merupakan model bawaan dari Spatie yang digunakan dalam menyimpan berbagai tipe pengguna ke dalam tabel `roles`
+
+Variable `$roles` menyimpan `array` yang berisikan nama - nama dari tipe pengguna yang ingin digunakan di dalam sistem. Variabel ini akan di `loop` menggunakan method `foreach` yang secara satu per satu akan melakukan `create` role baru ke dalam model `Role` melalui syntax dibawah ini, dimana `$role` merepresentasikan tiap - tiap isi array pada variabel `$roles` 
+
+```php
+Role::create(["name" => $role]);
+```
+
+Untuk memasukkan tipe role tersebut ke dalam tabel `roles` maka jalankan perintah berikut pada Command Prompt
+```bash
+php artisan db:seed --class=RoleSeeder
+```
+#### 4.1.3 Contoh Kode Penggunaan
+1). Membuat akun khusus untuk admin. Kode berikut berada pada `database/seeders/AdminSeeder.php`
+
+```php
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class AdminSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+        $admin = User::create([
+            "name" => "Administrator Tata Usaha",
+            "password" => bcrypt('12345678'),
+            "email" => "admin@gmail.com",
+            "position" => "Adminstrator TU"
+        ]);
+
+        $admin->assignRole('admin');
+    }
+}
+```
+Pada kode diatas sistem akan membuat akun atau user baru dengan `name` Administrator Tata Usaha, `password` 12345678, `email` admin@gmail.com, dan `position` Administrator TU.
+
+Pada kode diatas juga ditunjukkan bagaimana menerapkan `role` pengguna kepada user tertentu menggunakan kode `assignRole('nama-role')`, dimana pada kasus ini sistem akan menerapkan `role` pengguna admin pada akun atau user tersebut
+
+2). Mendaftarkan akun baru melalui halaman `register`. Contoh kode berikut dapat ditemui pada `app/Http/Controllers/Auth/RegisterController.php`
+
+```php
+protected function create(array $data)
+{
+	$user = User::create([
+		'name' => $data['name'],
+		'email' => $data['email'],
+		'password' => Hash::make($data['password'])
+	]);
+
+	$user->assignRole('user');
+
+	return $user;
+}
+```
+Berdasarkan kode diatas, setiap user yang melakukan pendaftaran akun baru melalui halaman `register` akan secara otomatis diterapkan `role` pengguna sebagai `user` melalui kode `$user->assignRole('user')`
+
+3). Mengetahui tipe role pengguna dari user tertentu. Kode berikut dapat ditemui pada `resources/views/includes/breadcrumb.blade.php`
+
+```html
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+    	<li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">{{ auth()->user()->roles->first()->name }}</a></li>
+		...
+    </ol>
+</nav>
+```
+
+Pada kode diatas digunakan untuk menampilkan informasi mengenai tipe pengguna user yang saat ini sedang login di sistem, kemudian menampilkannya ke dalam `view`. 
+
+Kode yang digunakan adalah
+```php
+auth()->user()->roles->first()->name;
+```
+
+### 4.2. Autentikasi Pengguna
 
 - Deskripsi fitur
 - Alur kerja
 - Route terkait
 - Contoh kode penggunaan
 
-### 4.2. Manajemen Peminjaman Mobil
+### 4.3. Manajemen Peminjaman Mobil
 
 - Deskripsi fitur
 - Alur kerja
 - Route terkait
 - Contoh kode penggunaan
 
-### 4.3. Tanda Tangan Digital
+### 4.4. Tanda Tangan Digital
 
 - Deskripsi fitur
 - Alur kerja
 - Route terkait
 - Contoh kode penggunaan
 
-### 4.4. Manajemen Pelanggan
+### 4.5. Manajemen Pelanggan
 
 - Deskripsi fitur
 - Alur kerja
@@ -432,4 +600,4 @@ Pada kode diatas juga menunjukkan contoh penggunaan tindakan dalam Controller ya
 - Dokumentasi resmi Laravel 10
 
 <br>
-Last Edited 11/07/2023
+Last Edited 14/07/2023
