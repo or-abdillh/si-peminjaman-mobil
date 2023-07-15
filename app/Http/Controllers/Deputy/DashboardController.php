@@ -15,6 +15,9 @@ class DashboardController extends Controller
             'page' => 'Dashboard Deputi'
         ];
 
+        // Notif selamat datang
+        notyf()->addInfo('Halo, ' . auth()->user()->name);
+        
         // render view
         return view('dashboard', $data);
     }

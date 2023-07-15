@@ -7,7 +7,7 @@
         <div class="card card-plain mt-8">
           <div class="card-header pb-0 text-left bg-transparent">
             <h3 class="font-weight-bolder text-info text-gradient">Selamat datang</h3>
-            <p class="mb-0">Masukan Email dan password untuk masuk ke dalam aplikasi</p>
+            <p class="mb-0">Masukan Email dan password untuk masuk ke dalam Website SI Peminjaman Mobil</p>
           </div>
 
           {{-- form --}}

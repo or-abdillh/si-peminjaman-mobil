@@ -16,15 +16,18 @@ class CarController extends Controller
         // ambil semua data mobil
         $cars = Car::all();
 
+        
         // kumpulkan data mobil yang tersedia atau bisa digunakan
         $available = $cars->filter(function ($car) {
             return @$car->status == false;
         });
-
+        
         // kumpulkan data mobil yang tidak tersedia atau sedang digunakan
         $used = $cars->filter(function ($car) {
             return @$car->status == true;
         });
+
+        // return $used;
 
         // kirim data ke view
         $data = [
