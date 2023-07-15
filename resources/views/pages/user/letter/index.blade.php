@@ -269,7 +269,7 @@
                                         <label>Dokumen pendukung / PDF</label>
                                         <input type="file"
                                             class="form-control @error('attachment') is-invalid @enderror"
-                                            name="attachment" accept="application/pdf">
+                                            name="attachment" accept="">
                                         @error('attachment')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -113,7 +113,7 @@ class LetterController extends Controller
             'destination_place' => 'required|string',
             'pickup_place' => 'required|string',
             'name' => 'required|string',
-            'attachment' => 'nullable|mimes:pdf',
+            'attachment' => 'nullable',
             'estimation_times.*' => 'nullable',
             'estimations.*' => 'nullable',
             'participant_names.*' => 'nullable',

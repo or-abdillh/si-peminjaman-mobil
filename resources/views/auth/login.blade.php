@@ -10,7 +10,7 @@
             <p class="mb-0">Masukan Email dan password untuk masuk ke dalam Website SI Peminjaman Mobil</p>
           </div>
 
-          {{-- form --}}
+          {{-- form --}} 
           <div class="card-body">
             <form role="form" method="POST" action="{{ route('login') }}">
                 @csrf
@@ -42,7 +42,7 @@
                 <div class="text-center">
                     <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Login</button>
                 </div>
-             </form>
+            </form>
           </div>
 
           <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -56,7 +56,7 @@
 
       <div class="col-md-6">
         <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-          <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{ asset('soft-ui/assets/img/curved-images/curved6.jpg') }}')"></div>
+          <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('{{ asset('images/sekolah.jpeg') }}')"></div>
         </div>
       </div>
     </div>
