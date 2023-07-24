@@ -24,6 +24,9 @@ class DashboardController extends Controller
             'validations' => $validations
         ];
 
+        // Notif selamat datang
+        notyf()->addInfo('Halo, ' . auth()->user()->name);
+        
         // render view
         return view('dashboard', $data);
     }
