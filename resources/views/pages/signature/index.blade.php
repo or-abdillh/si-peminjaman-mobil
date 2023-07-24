@@ -114,7 +114,9 @@
                                 </div>
                             @endif
                         </section>
-                        <img src="{{ asset('storage/signatures/' . $signature->image) }}" class="img-thumbnail">
+                        @if (@$signature)
+                            <img src="{{ asset('storage/signatures/' . @$signature->image) }}" class="img-thumbnail">
+                        @endif
                     </section>
                 </section>
             </section>
