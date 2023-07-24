@@ -77,6 +77,7 @@ class LetterController extends Controller
         $data = [
             'page' => 'Pengajuan Peminjaman Mobil',
             'managers' => $managers,
+            'letter' => $letterProcess ?? $letterLastAccepted ?? null,
             'letters' => $letters,
             'lastLetter' => $lastletter,
             'letterAccepteds' => $letterAccepteds,
