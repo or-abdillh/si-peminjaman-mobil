@@ -77,6 +77,7 @@ class LetterController extends Controller
         $data = [
             'page' => 'Pengajuan Peminjaman Mobil',
             'managers' => $managers,
+            'letter' => $letterProcess ?? $letterLastAccepted ?? null,
             'letters' => $letters,
             'lastLetter' => $lastletter,
             'letterAccepteds' => $letterAccepteds,
@@ -113,7 +114,7 @@ class LetterController extends Controller
             'destination_place' => 'required|string',
             'pickup_place' => 'required|string',
             'name' => 'required|string',
-            'attachment' => 'nullable|mimes:pdf',
+            'attachment' => 'nullable',
             'estimation_times.*' => 'nullable',
             'estimations.*' => 'nullable',
             'participant_names.*' => 'nullable',

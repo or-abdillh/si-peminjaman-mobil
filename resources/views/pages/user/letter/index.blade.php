@@ -107,6 +107,27 @@
             </section>
         </section>
 
+        {{-- tracking progress --}}
+        @if ($letter)
+            <section class="mb-4">
+                <section class="card">
+                    <section class="card-header">
+                        <header class="d-flex justify-content-between">
+                            <section>
+                                <h5>Tracking Progress</h5>
+                                <small>Pantau status pengajuan peminjaman mobil anda disini</small>
+                            </section>
+                            <section class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                <i class="fa-solid text-lg fa-list-check"></i>
+                            </section>
+                        </header>
+                    </section>
+                    <section class="card-body">
+                        @include('includes.tracking-progress')
+                    </section>
+                </section>
+            </section>
+        @endif
 
         @if ($letterProcess)
             {{-- info proses pengajuan --}}
@@ -190,7 +211,7 @@
             <section class="row mb-4">
 
                 <form action="{{ route('user.letter.store') }}" method="POST" enctype="multipart/form-data"
-                    class="col-lg-8 row">
+                    class="col-lg-8 row justify-content-between">
                     {{-- form utama --}}
                     <section class="col-12 mb-4">
                         <section class="card">
@@ -269,7 +290,7 @@
                                         <label>Dokumen pendukung / PDF</label>
                                         <input type="file"
                                             class="form-control @error('attachment') is-invalid @enderror"
-                                            name="attachment" accept="application/pdf">
+                                            name="attachment" accept="">
                                         @error('attachment')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -454,104 +475,112 @@
             </section>
         @endif
 
-    @if (@$letterProcess)
-    {{-- modal untuk menampilkan detail pengajuan yang sedang di prosess atau yang disetujui--}}
-    <div class="modal fade" id="showLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <section class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Pengajuan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <section>
-                        <small class="text-secondary">Kegiatan</small>
-                        <h6>{{ @$letterProcess->name }}</h6>
+        @if (@$letterProcess)
+            {{-- modal untuk menampilkan detail pengajuan yang sedang di prosess atau yang disetujui --}}
+            <div class="modal fade" id="showLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <section class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Detail Pengajuan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <section>
+                                <small class="text-secondary">Kegiatan</small>
+                                <h6>{{ @$letterProcess->name }}</h6>
+                            </section>
+                            <section>
+                                <small>Waktu kegiatan</small>
+                                <h6>Dari {{ date('D, j F Y H:i', strtotime(@$letterProcess->start_time)) }} sampai
+                                    {{ date('D, j F Y H:i', strtotime(@$letterProcess->finish_time)) }}</h6>
+                            </section>
+                            <section class="row">
+                                <section class="col">
+                                    <small>Peserta</small>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Kelamin</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (@$letterProcess->participants as $participant)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $participant->name }}</td>
+                                                    <td>{{ $participant->gender }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </section>
+                                <section class="col">
+                                    <small>Aktivitas</small>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Estimasi Waktu</th>
+                                                <th>Estimasi Kegiatan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (@$letterProcess->activities as $activity)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $activity->estimation_time }}</td>
+                                                    <td>{{ $activity->estimation }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </section>
+                        </div>
+                        <div class="modal-footer">
+                            {{-- lihat lampiran --}}
+                            @if ($letterProcess->attachment)
+                                <a href="{{ asset('storage/attachments/' . @$letterProcess->attachment) }}"
+                                    target="_blank" class="btn btn-info">Lihat lampiran</a>
+                            @endif
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </section>
-                    <section>
-                        <small>Waktu kegiatan</small>
-                        <h6>Dari {{ date('D, j F Y H:i', strtotime(@$letterProcess->start_time)) }} sampai {{ date('D, j F Y H:i', strtotime(@$letterProcess->finish_time)) }}</h6>
-                    </section>
-                    <section class="row">
-                        <section class="col">
-                            <small>Peserta</small>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Kelamin</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (@$letterProcess->participants as $participant)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $participant->name }}</td>
-                                        <td>{{ $participant->gender }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </section>
-                        <section class="col">
-                            <small>Aktivitas</small>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Estimasi Waktu</th>
-                                        <th>Estimasi Kegiatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (@$letterProcess->activities as $activity)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $activity->estimation_time }}</td>
-                                        <td>{{ $activity->estimation }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </section>
-                    </section>
                 </div>
-                <div class="modal-footer">
-                    {{-- lihat lampiran --}}
-                    @if ($letterProcess->attachment)
-                    <a href="{{ asset('storage/attachments/' . @$letterProcess->attachment) }}" target="_blank" class="btn btn-info">Lihat lampiran</a>
-                    @endif
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </section>
-        </div>
-    </div>
-    @if ($letterProcess)
-    {{-- modal untuk menghapus detail pengajuan --}}
-    <div class="modal fade" id="deleteLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form method="POST" action="{{ route('user.letter.destroy', $letterProcess->id) }}" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Batalkan Pengajuan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        @csrf
-                        @method('DELETE')
-                        <p>Anda yakin ingin membatalkan pengajuan ini? pastikan anda sudah menghubungi admin perihal pembatalan</p>
+            </div>
+            @if ($letterProcess)
+                {{-- modal untuk menghapus detail pengajuan --}}
+                <div class="modal fade" id="deleteLetterModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form method="POST" action="{{ route('user.letter.destroy', $letterProcess->id) }}"
+                            class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Batalkan Pengajuan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    @csrf
+                                    @method('DELETE')
+                                    <p>Anda yakin ingin membatalkan pengajuan ini? pastikan anda sudah menghubungi admin
+                                        perihal pembatalan</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>   
-    @endif
-    @endif
+            @endif
+        @endif
 
         {{-- modal untuk melihat alasan penolakan --}}
         @if (@$letterLastRejected)
